@@ -37,7 +37,8 @@
 
 
     function  preload ()
-    {
+    {        
+        this.load.image('background', 'assets/background.png');
         this.load.image('apple', 'assets/apple.png');
         this.load.image('fish', 'assets/fish.png');
         this.load.image('empty', 'assets/empty.png');
@@ -48,6 +49,9 @@
 
     function create ()
     {
+
+        this.fieldSelectorImage = this.add.image(150,430,'background');
+
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
