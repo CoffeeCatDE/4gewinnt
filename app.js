@@ -240,7 +240,7 @@
                         (gameField[y-3][x] == whoIsPlayer)
                         )                    
                         {
-                         gameOver = true;
+                        gameOver = true;
                       
                         if (whoIsPlayer == 1){
                                     alert("You won!  (vertical)");
@@ -253,7 +253,9 @@
                                 }
                          break;
                         }
-                        if (
+
+
+                    if (
                         (gameField[y-1][x] == whoIsPlayer) &&
                         (gameField[y-2][x] == whoIsPlayer) &&
                         (gameField[y-3][x] == whoIsPlayer) &&
