@@ -34,6 +34,8 @@
     var gameField;
 
     var game = new Phaser.Game(config);
+        
+
 
 
      function Node(data) {
@@ -225,33 +227,98 @@
 
     }
 
-/***
+    function hasOneWonVertical (whoIsPlayer){
 
-**/
-function hasOneWon (playerid){
 
-    /**
-    TEST HORIZONTAL WIN SUCCESS
-    **/
-    for (var y = 0;  y < heigth; y++){
-        for (var x =0; x < width; x++ ){
-            if ((gameField[y][x] == playerid) &&
-                (gameField[y][x+1] == playerid) &&
-                    (gameField[y][x+2] == playerid) &&
-                        (gameField[y][x+3] == playerid)){
+            for (var x = 0; x < width-1; x++){
+                for (var y = 5; y >= 0; y -= 1){
+                    if (
+                        (gameField[y][x] == whoIsPlayer) &&
+                        (gameField[y-1][x] == whoIsPlayer) &&
+                        (gameField[y-2][x] == whoIsPlayer) &&
+                        (gameField[y-3][x] == whoIsPlayer)
+                        ){
+                         gameOver = true;
+                        if (whoIsPlayer == 1){
+                                    alert("Game Over! You won!  (horizontal)");
+                                    gameOver = true;
+                                }
 
-                            if (playerid == 1){
-                                alert("Game Over! You won!");
-                            }
-
-                            if (playerid == 2){
-                                alert("Game Over! You lost.");
-                            }
-                    }
-                
+                                if (whoIsPlayer == 2){
+                                    gameOver = true;
+                                    alert("Game Over! You lost. (horizontal)");
+                                }
+                         break;
+                        }
+                    
             }
         }
     }
+
+    function hasOneWonHorizontal (whoIsPlayer){
+
+        /**
+        TEST HORIZONTAL WIN SUCCESS
+        **/
+        for (var y = 0;  y < heigth; y++){
+            for (var x =0; x < width; x++ ){
+                if ((gameField[y][x] == whoIsPlayer) &&
+                    (gameField[y][x+1] == whoIsPlayer) &&
+                        (gameField[y][x+2] == whoIsPlayer) &&
+                            (gameField[y][x+3] == whoIsPlayer)){
+
+                                if (whoIsPlayer == 1){
+                                    alert("Game Over! You won!  (horizontal)");
+                                    gameOver = true;
+                                }
+
+                                if (whoIsPlayer == 2){
+                                    gameOver = true;
+                                    alert("Game Over! You lost. (horizontal)");
+                                }
+                        }
+                    
+        }
+    }
+
+
+
+
+
+
+/**
+
+        for (var x = 0; x < width-1; x++){
+            for (var y = 7; y > (heigth-4); y++){
+                 if (
+                    (gameField[y][x] == playerid) &&
+                    (gameField[y+1][x] == playerid) &&
+                    (gameField[y+2][x] == playerid) &&
+                    (gameField[y+3][x] == playerid)
+                    ){
+
+                        if (playerid == 1){
+                                alert("Game Over! You won! (vertical)");
+                                gameOver = true;
+                                break;
+                       }
+
+                        if (playerid == 2){
+                                gameOver = true;
+                                alert("Game Over! You lost. (Vertical)");
+                                break;
+                        }
+                    }
+                
+            }
+
+        }
+
+        **/
+    }
+
+
+
 
 
 // IS ROW FREE OR FULL
@@ -278,7 +345,7 @@ function hasOneWon (playerid){
         }
     }
 
-function getHeigthOfColumn(column){
+    function getHeigthOfColumn(column){
         var stones = 5;
         for (stones; stones >= 0; stones = stones-1){
             // FREE FOR MIN. 1 STONE
@@ -296,21 +363,21 @@ function getHeigthOfColumn(column){
 
         return stones;
 
-}
-function printXY (){
-    console.log("X" + markerPositionX);
-    console.log("Y" + markerPositionY);
-    console.log(gameField);
+    }
+    function printXY (){
+        console.log("X" + markerPositionX);
+        console.log("Y" + markerPositionY);
+        console.log(gameField);
 
-}
+    }
 
-function searchForHorizontalDanger (){
-        for (var y = 0; y < heigth; y++){
-            for (var x = 0; x < width; x++){
+    function searchForHorizontalDanger (){
+            for (var y = 0; y < heigth; y++){
+                for (var x = 0; x < width; x++){
 
+                }
             }
-        }
-}
+    }
 
     /**
      * @TODO
@@ -329,7 +396,7 @@ function searchForHorizontalDanger (){
                 console.log("C::: " + thisCol);
                 // GET ROW
                 var heigthOfCol = getHeigthOfColumn(thisCol);
-                gameField[heigthOfCol][thisCol] = computerid;
+                //gameField[heigthOfCol][thisCol] = computerid;
 
                 var newStone = new Phaser.Geom.Point(thisCol, heigthOfCol);
                 console.log("_______//AI_______");
@@ -383,8 +450,11 @@ function update (){
                         
                         this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 
-                        hasOneWon(1);
                         printXY();
+                        hasOneWonHorizontal(player);
+                        hasOneWonVertical(player);
+
+
                     }
                     player = computerid;
 
@@ -395,14 +465,19 @@ function update (){
                     var p =letAIplay();
                     console.log("NEW POINT (AI) X:" + p.x + "Y: " + p.y);
 
+                    gameField[p.y][p.x] = computerid;
+
                     this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
-                    hasOneWon(2);
+                    hasOneWonHorizontal(player);
+                    hasOneWonVertical(player);
+
+
 
                     player = playerid;
                 }
             }
 
-    }
+        }
 
            
 
