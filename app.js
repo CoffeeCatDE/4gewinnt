@@ -9,6 +9,8 @@
     var markerPositionY = 0;
     var fieldSelector = 0;
 
+    var gameOver = false;
+
     var selectingPicture;
 
     // SWITCH FOR GAME LOGIC: 1 = user; 2 = AI
@@ -34,169 +36,141 @@
     var game = new Phaser.Game(config);
 
 
- function Node(data) {
-    this.data = data;
-    this.parent = null;
-    this.children = [];
-}
- 
-function Tree(data) {
-    var node = new Node(data);
-    this._root = node;
-}
- 
-Tree.prototype.traverseDF = function(callback) {
- 
-    // this is a recurse and immediately-invoking function
-    (function recurse(currentNode) {
-        // step 2
-        for (var i = 0, length = currentNode.children.length; i < length; i++) {
-            // step 3
-            recurse(currentNode.children[i]);
-        }
- 
-        // step 4
-        callback(currentNode);
- 
-        // step 1
-    })(this._root);
- 
-};
- 
-Tree.prototype.traverseBF = function(callback) {
-    var queue = new Queue();
- 
-    queue.enqueue(this._root);
- 
-    currentTree = queue.dequeue();
- 
-    while(currentTree){
-        for (var i = 0, length = currentTree.children.length; i < length; i++) {
-            queue.enqueue(currentTree.children[i]);
-        }
- 
-        callback(currentTree);
-        currentTree = queue.dequeue();
+     function Node(data) {
+        this.data = data;
+        this.parent = null;
+        this.children = [];
     }
-};
- 
-Tree.prototype.contains = function(callback, traversal) {
-    traversal.call(this, callback);
-};
- 
-Tree.prototype.add = function(data, toData, traversal) {
-    var child = new Node(data),
-        parent = null,
-        callback = function(node) {
-            if (node.data === toData) {
-                parent = node;
+     
+    function Tree(data) {
+        var node = new Node(data);
+        this._root = node;
+    }
+     
+    Tree.prototype.traverseDF = function(callback) {
+     
+        // this is a recurse and immediately-invoking function
+        (function recurse(currentNode) {
+            // step 2
+            for (var i = 0, length = currentNode.children.length; i < length; i++) {
+                // step 3
+                recurse(currentNode.children[i]);
             }
-        };
- 
-    this.contains(callback, traversal);
- 
-    if (parent) {
-        parent.children.push(child);
-        child.parent = parent;
-    } else {
-        throw new Error('Cannot add node to a non-existent parent.');
-    }
-};
- 
-Tree.prototype.remove = function(data, fromData, traversal) {
-    var tree = this,
-        parent = null,
-        childToRemove = null,
-        index;
- 
-    var callback = function(node) {
-        if (node.data === fromData) {
-            parent = node;
+     
+            // step 4
+            callback(currentNode);
+     
+            // step 1
+        })(this._root);
+     
+    };
+     
+    Tree.prototype.traverseBF = function(callback) {
+        var queue = new Queue();
+     
+        queue.enqueue(this._root);
+     
+        currentTree = queue.dequeue();
+     
+        while(currentTree){
+            for (var i = 0, length = currentTree.children.length; i < length; i++) {
+                queue.enqueue(currentTree.children[i]);
+            }
+     
+            callback(currentTree);
+            currentTree = queue.dequeue();
+        }
+    };
+     
+    Tree.prototype.contains = function(callback, traversal) {
+        traversal.call(this, callback);
+    };
+     
+    Tree.prototype.add = function(data, toData, traversal) {
+        var child = new Node(data),
+            parent = null,
+            callback = function(node) {
+                if (node.data === toData) {
+                    parent = node;
+                }
+            };
+     
+        this.contains(callback, traversal);
+     
+        if (parent) {
+            parent.children.push(child);
+            child.parent = parent;
+        } else {
+            throw new Error('Cannot add node to a non-existent parent.');
         }
     };
  
-    this.contains(callback, traversal);
- 
-    if (parent) {
-        index = findIndex(parent.children, data);
- 
-        if (index === undefined) {
-            throw new Error('Node to remove does not exist.');
+    Tree.prototype.remove = function(data, fromData, traversal) {
+        var tree = this,
+            parent = null,
+            childToRemove = null,
+            index;
+     
+        var callback = function(node) {
+            if (node.data === fromData) {
+                parent = node;
+            }
+        };
+     
+        this.contains(callback, traversal);
+     
+        if (parent) {
+            index = findIndex(parent.children, data);
+     
+            if (index === undefined) {
+                throw new Error('Node to remove does not exist.');
+            } else {
+                childToRemove = parent.children.splice(index, 1);
+            }
         } else {
-            childToRemove = parent.children.splice(index, 1);
+            throw new Error('Parent does not exist.');
         }
-    } else {
-        throw new Error('Parent does not exist.');
-    }
+     
+        return childToRemove;
+    };
  
-    return childToRemove;
-};
- 
-function findIndex(arr, data) {
-    var index;
- 
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i].data === data) {
-            index = i;
+    function findIndex(arr, data) {
+        var index;
+     
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].data === data) {
+                index = i;
+            }
         }
+     
+        return index;
     }
- 
-    return index;
-}
 
 
-    var tree = new Tree('one');
+
+    var tree = new Tree('CEO');
      
-    tree._root.children.push(new Node('two'));
-    tree._root.children[0].parent = tree;
+    tree.add('VP of Happiness', 'CEO', tree.traverseBF);
+    tree.add('VP of Finance', 'CEO', tree.traverseBF);
+    tree.add('VP of Sadness', 'CEO', tree.traverseBF);
      
-    tree._root.children.push(new Node('three'));
-    tree._root.children[1].parent = tree;
-     
-    tree._root.children.push(new Node('four'));
-    tree._root.children[2].parent = tree;
-     
-    tree._root.children[0].children.push(new Node('five'));
-    tree._root.children[0].children[0].parent = tree._root.children[0];
-     
-    tree._root.children[0].children.push(new Node('six'));
-    tree._root.children[0].children[1].parent = tree._root.children[0];
-     
-    tree._root.children[2].children.push(new Node('seven'));
-    tree._root.children[2].children[0].parent = tree._root.children[2];
+    tree.add('Director of Puppies', 'VP of Finance', tree.traverseBF);
+    tree.add('Manager of Puppies', 'Director of Puppies', tree.traverseBF);
+
+
      
     /*
      
-    creates this tree
+     tree
      
-     one
-     ├── two
-     │   ├── five
-     │   └── six
-     ├── three
-     └── four
-         └── seven
+     'CEO'
+     ├── 'VP of Happiness'
+     ├── 'VP of Finance'
+     │   ├── 'Director of Puppies'
+     │   └── 'Manager of Puppies'
+     └── 'VP of Sadness'
      
-    */
-
-
-    tree.traverseDF(function(node) {
-    console.log(node.data)
-    });
-     
-    /*
-     
-    logs the following strings to the console
-     
-    'five'
-    'six'
-    'two'
-    'three'
-    'seven'
-    'four'
-    'one'
-     
-    */
+     */
 
 
     function  preload ()
@@ -249,8 +223,36 @@ function findIndex(arr, data) {
 
 
 
-
     }
+
+/***
+
+**/
+function hasOneWon (playerid){
+
+    /**
+    TEST HORIZONTAL WIN SUCCESS
+    **/
+    for (var y = 0;  y < heigth; y++){
+        for (var x =0; x < width; x++ ){
+            if ((gameField[y][x] == playerid) &&
+                (gameField[y][x+1] == playerid) &&
+                    (gameField[y][x+2] == playerid) &&
+                        (gameField[y][x+3] == playerid)){
+
+                            if (playerid == 1){
+                                alert("Game Over! You won!");
+                            }
+
+                            if (playerid == 2){
+                                alert("Game Over! You lost.");
+                            }
+                    }
+                
+            }
+        }
+    }
+
 
 // IS ROW FREE OR FULL
     /***
@@ -346,8 +348,8 @@ function searchForHorizontalDanger (){
 
 function update (){
 
-
-            // KEYBOARD RIGHT PRESSED
+    if (!gameOver){
+         // KEYBOARD RIGHT PRESSED
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT))
                 && (markerPositionX < width)){
                 // CHANGE SELECT POSITION IN GAMEFIELD ( -> )
@@ -375,8 +377,13 @@ function update (){
                         var h =getHeigthOfColumn(markerPositionX);
                         console.log( "h: -> " + h);
                         gameField[h][markerPositionX] = playerid;
+
+                    
+
+                        
                         this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 
+                        hasOneWon(1);
                         printXY();
                     }
                     player = computerid;
@@ -389,10 +396,15 @@ function update (){
                     console.log("NEW POINT (AI) X:" + p.x + "Y: " + p.y);
 
                     this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
+                    hasOneWon(2);
+
                     player = playerid;
                 }
             }
 
+    }
+
+           
 
 
 
@@ -407,8 +419,5 @@ function update (){
 
 
     }
-
-
-
 
     create();
