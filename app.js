@@ -34,6 +34,8 @@
     var gameField;
 
     var game = new Phaser.Game(config);
+        
+
 
 
      function Node(data) {
@@ -225,33 +227,99 @@
 
     }
 
-/***
+    function hasOneWonVertical (playerid){
 
-**/
-function hasOneWon (playerid){
 
-    /**
-    TEST HORIZONTAL WIN SUCCESS
-    **/
-    for (var y = 0;  y < heigth; y++){
-        for (var x =0; x < width; x++ ){
-            if ((gameField[y][x] == playerid) &&
-                (gameField[y][x+1] == playerid) &&
-                    (gameField[y][x+2] == playerid) &&
-                        (gameField[y][x+3] == playerid)){
+            for (var x = 0; x < width-1; x++){
+
+                for (var y = 4; y < 9; y++){
+
+                     if (
+                        (gameField[y][x] == playerid) &&
+                        (gameField[y+1][x] == playerid) &&
+                        (gameField[y+2][x] == playerid) &&
+                        (gameField[y+3][x] == playerid)
+                        ){
 
                             if (playerid == 1){
-                                alert("Game Over! You won!");
-                            }
+                                    alert("Game Over! You won! (vertical)");
+                                    gameOver = true;
+                           }
 
                             if (playerid == 2){
-                                alert("Game Over! You lost.");
+                                    gameOver = true;
+                                    alert("Game Over! You lost. (Vertical)");
                             }
-                    }
-                
+                        }
+                    
             }
         }
     }
+
+    function hasOneWonHorizontal (playerid){
+
+        /**
+        TEST HORIZONTAL WIN SUCCESS
+        **/
+        for (var y = 0;  y < heigth; y++){
+            for (var x =0; x < width; x++ ){
+                if ((gameField[y][x] == playerid) &&
+                    (gameField[y][x+1] == playerid) &&
+                        (gameField[y][x+2] == playerid) &&
+                            (gameField[y][x+3] == playerid)){
+
+                                if (playerid == 1){
+                                    alert("Game Over! You won!  (horizontal)");
+                                    gameOver = true;
+                                }
+
+                                if (playerid == 2){
+                                    gameOver = true;
+                                    alert("Game Over! You lost. (horizontal)");
+                                }
+                        }
+                    
+                }
+    }
+
+
+
+
+
+
+/**
+
+        for (var x = 0; x < width-1; x++){
+            for (var y = 7; y > (heigth-4); y++){
+                 if (
+                    (gameField[y][x] == playerid) &&
+                    (gameField[y+1][x] == playerid) &&
+                    (gameField[y+2][x] == playerid) &&
+                    (gameField[y+3][x] == playerid)
+                    ){
+
+                        if (playerid == 1){
+                                alert("Game Over! You won! (vertical)");
+                                gameOver = true;
+                                break;
+                       }
+
+                        if (playerid == 2){
+                                gameOver = true;
+                                alert("Game Over! You lost. (Vertical)");
+                                break;
+                        }
+                    }
+                
+            }
+
+        }
+
+        **/
+    }
+
+
+
 
 
 // IS ROW FREE OR FULL
@@ -383,8 +451,12 @@ function update (){
                         
                         this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 
-                        hasOneWon(1);
                         printXY();
+                        hasOneWonHorizontal(1);
+                        hasOneWonVertical(1);
+                        
+
+
                     }
                     player = computerid;
 
@@ -395,14 +467,19 @@ function update (){
                     var p =letAIplay();
                     console.log("NEW POINT (AI) X:" + p.x + "Y: " + p.y);
 
+                     gameField[p.y][p.x] = computerid;
+
                     this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
-                    hasOneWon(2);
+                    hasOneWonHorizontal(2);
+                        hasOneWonVertical(2);
+
+
 
                     player = playerid;
                 }
             }
 
-    }
+        }
 
            
 
