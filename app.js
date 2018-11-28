@@ -231,25 +231,50 @@
 
 
             for (var x = 0; x < width-1; x++){
-                for (var y = 5; y >= 0; y -= 1){
+                for (var y = 5; y >= 0; y--){
+                    alert(y);
                     if (
                         (gameField[y][x] == whoIsPlayer) &&
                         (gameField[y-1][x] == whoIsPlayer) &&
                         (gameField[y-2][x] == whoIsPlayer) &&
                         (gameField[y-3][x] == whoIsPlayer)
-                        ){
+                        )                    
+                        {
                          gameOver = true;
+                      
                         if (whoIsPlayer == 1){
-                                    alert("Game Over! You won!  (horizontal)");
+                                    alert("You won!  (vertical)");
                                     gameOver = true;
                                 }
 
                                 if (whoIsPlayer == 2){
                                     gameOver = true;
-                                    alert("Game Over! You lost. (horizontal)");
+                                    alert("You lost. (vertical)");
                                 }
                          break;
                         }
+                        if (
+                        (gameField[y-1][x] == whoIsPlayer) &&
+                        (gameField[y-2][x] == whoIsPlayer) &&
+                        (gameField[y-3][x] == whoIsPlayer) &&
+                        (gameField[y-4][x] == whoIsPlayer)
+                        )
+                        {
+                        gameOver = true;
+                      
+                        if (whoIsPlayer == 1){
+                                    alert("You won!  (vertical)");
+                                    gameOver = true;
+                                }
+
+                                if (whoIsPlayer == 2){
+                                    gameOver = true;
+                                    alert("You lost. (vertical)");
+                                }
+                         break;
+
+                        }
+
                     
             }
         }
@@ -268,13 +293,13 @@
                             (gameField[y][x+3] == whoIsPlayer)){
 
                                 if (whoIsPlayer == 1){
-                                    alert("Game Over! You won!  (horizontal)");
+                                    alert("You won!  (horizontal)");
                                     gameOver = true;
                                 }
 
                                 if (whoIsPlayer == 2){
                                     gameOver = true;
-                                    alert("Game Over! You lost. (horizontal)");
+                                    alert("You lost. (horizontal)");
                                 }
                         }
                     
