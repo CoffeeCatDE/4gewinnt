@@ -231,8 +231,7 @@
 
 
             for (var x = 0; x < width-1; x++){
-                for (var y = 5; y >= 0; y--){
-                    alert(y);
+                for (var y = 5; y >= 3; y--){
                     if (
                         (gameField[y][x] == whoIsPlayer) &&
                         (gameField[y-1][x] == whoIsPlayer) &&
@@ -240,40 +239,18 @@
                         (gameField[y-3][x] == whoIsPlayer)
                         )                    
                         {
-                        gameOver = true;
-                      
-                        if (whoIsPlayer == 1){
-                                    alert("You won!  (vertical)");
-                                    gameOver = true;
-                                }
+                          
+                            if (whoIsPlayer == 1){
+                                        alert("You won!  (vertical)");
+                                        gameOver = true;
+                                    }
 
-                                if (whoIsPlayer == 2){
-                                    gameOver = true;
-                                    alert("You lost. (vertical)");
-                                }
-                         break;
-                        }
+                                    if (whoIsPlayer == 2){
+                                        gameOver = true;
+                                        alert("Computer won! (vertical)");
+                                    }
 
-
-                    if (
-                        (gameField[y-1][x] == whoIsPlayer) &&
-                        (gameField[y-2][x] == whoIsPlayer) &&
-                        (gameField[y-3][x] == whoIsPlayer) &&
-                        (gameField[y-4][x] == whoIsPlayer)
-                        )
-                        {
-                        gameOver = true;
-                      
-                        if (whoIsPlayer == 1){
-                                    alert("You won!  (vertical)");
-                                    gameOver = true;
-                                }
-
-                                if (whoIsPlayer == 2){
-                                    gameOver = true;
-                                    alert("You lost. (vertical)");
-                                }
-                         break;
+                            gameOver = true;
 
                         }
 
