@@ -206,6 +206,39 @@
     }
 
     /**
+    **/
+    function hasWonDiagonal (whoIsPlayer,y,x){
+
+        for (var x =0; x < 4; x++){
+            if (
+            (
+                gameField[5][x] == whoIsPlayer
+            )
+            &&
+            (
+                gameField[4][x+1] == whoIsPlayer
+            )
+             &&
+            (
+                gameField[3][x+2] == whoIsPlayer
+            )
+            &&
+            (
+                gameField[2][x+3] == whoIsPlayer
+            )
+        ){
+            alert("DIAGONAL WON" + whoIsPlayer);
+            gameOver = true;
+        }
+
+        }
+       
+
+            
+    }
+
+
+    /**
      * @TODO
      * @returns {Phaser.Geom.Point}
      */
@@ -279,6 +312,7 @@ function update (){
                         printXY();
                         hasOneWonHorizontal(player);
                         hasOneWonVertical(player);
+                        hasWonDiagonal(player, 0,markerPositionX);
 
 
                     }
@@ -296,6 +330,7 @@ function update (){
                     this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
                     hasOneWonHorizontal(player);
                     hasOneWonVertical(player);
+                    hasWonDiagonal(player, 0 ,p.x);
 
 
 
