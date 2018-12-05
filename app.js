@@ -207,7 +207,7 @@
 
     /**
     **/
-    function hasWonDiagonal (whoIsPlayer,y,x){
+    function hasWonDiagonal (whoIsPlayer){
 
         for (var x =0; x < 4; x++){
             if (
