@@ -90,7 +90,7 @@
 
     function hasOneWonVertical (whoIsPlayer){
 
-        for (var x = 0; x < width-1; x++){
+        for (var x = 0; x < width; x++){
             for (var y = 5; y >= 3; y--){
                 if (
                    (gameField[y][x] == whoIsPlayer) &&
@@ -109,6 +109,8 @@
                    }
                         gameOver = true;
                 }
+				
+				
 
                     
             }
