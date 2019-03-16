@@ -19,6 +19,8 @@
     var computerid = 2;
     var fieldSelectorImage;
 
+    var updateFrames = 0;
+
     var config = {
         type: Phaser.AUTO,
         width: 900,
@@ -38,7 +40,7 @@
 
     function  preload ()
     {
-        this.load.image('background', 'assets/background.png');
+        this.load.image('background', 'assets/background.png',138, 15);
         this.load.image('apple', 'assets/apple.png');
         this.load.image('fish', 'assets/fish.png');
         this.load.image('empty', 'assets/empty.png');
@@ -51,16 +53,25 @@
 
     function create ()
     {
+        var logo = this.add.image(400, 300, 'apple');
 
         this.fieldSelectorImage = this.add.image(150,430,'background');
 
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, computerid, computerid, computerid, 0, 0]
+        ];
+        gameField1  = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0,0],
-            [0, 0, 0, 0, 0, playerid, 0],
-            [0, 0, 0, 0, playerid, 0, 0],
-            [0, 0, 0, playerid, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, playerid, playerid, playerid, 0, 0, 0]
         ];
 
         // draw empty gamefield
@@ -88,6 +99,15 @@
 
 
 
+    }
+
+    function sleep(milliseconds) {
+      var start = new Date().getTime();
+      for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+          break;
+        }
+      }
     }
 
     function hasOneWonVertical (whoIsPlayer){
@@ -284,6 +304,12 @@
 
 function update (){
 
+updateFrames += 1;
+
+    if (player == playerid){
+
+    }
+
     if (!gameOver){
          // KEYBOARD RIGHT PRESSED
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT))
@@ -327,6 +353,7 @@ function update (){
 
                     }
                     player = computerid;
+                    console.log(":::::::::::::::::::::player: " + player);
 
                 }
                 // LET AI PLAy
@@ -345,6 +372,8 @@ function update (){
 
 
                     player = playerid;
+                    console.log(":::::::::::::::::::::player: " + player);
+
                 }
             }
 
@@ -353,16 +382,30 @@ function update (){
             // Zeichnet die Steine ein, die gewonnen haben bei GameOver.
             if (gameOver == true){
 
-              for (var y = 0; y < heigth;  y += 1){
-                for (var x = 0; x < width; x += 1) {
-                    if (gameField[y][x] == 1){
-                        this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'win');
+              if (player == playerid){
+                for (var y = 0; y < heigth;  y += 1){
+
+                    for (var x = 0; x < width; x += 1) {
+                            if (gameField[y][x] == playerid){
+                              this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'win');
                     }
-                    if (gameField[y][x] == 0){
+                  }
+                }
+              }
+
+              if (player == computerid){
+
+                for (var y = 0; y < heigth;  y += 1){
+                    for (var x = 0; x < width; x += 1) {
+
+                      if (gameField[y][x] == computerid){
                         this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'lost');
+                      }
                     }
                 }
               }
+
+
 
 
             }
