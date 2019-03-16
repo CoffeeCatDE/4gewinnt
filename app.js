@@ -34,15 +34,17 @@
     var gameField;
 
     var game = new Phaser.Game(config);
-        
+
 
     function  preload ()
-    {        
+    {
         this.load.image('background', 'assets/background.png');
         this.load.image('apple', 'assets/apple.png');
         this.load.image('fish', 'assets/fish.png');
         this.load.image('empty', 'assets/empty.png');
         this.load.image('select', 'assets/select.png');
+        this.load.image('win', 'assets/win.png');
+        this.load.image('lost', 'assets/lost.png');
 
     }
 
@@ -55,10 +57,10 @@
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0,0],
+            [0, 0, 0, 0, 0, playerid, 0],
+            [0, 0, 0, 0, playerid, 0, 0],
+            [0, 0, 0, playerid, 0, 0, 0]
         ];
 
         // draw empty gamefield
@@ -97,22 +99,22 @@
                    (gameField[y-1][x] == whoIsPlayer) &&
                    (gameField[y-2][x] == whoIsPlayer) &&
                    (gameField[y-3][x] == whoIsPlayer)
-                   )                    
+                   )
                 {
-                          
+
                     if (whoIsPlayer == 1){
                         alert("You won!  (vertical)");
                    }
 
                    if (whoIsPlayer == 2){
-                        alert("Computer won! (vertical)");                                
+                        alert("Computer won! (vertical)");
                    }
                         gameOver = true;
                 }
-				
-				
 
-                    
+
+
+
             }
         }
     }
@@ -131,18 +133,24 @@
 
                                 if (whoIsPlayer == 1){
                                     alert("You won!  (horizontal)");
+
+
                                 }
 
                                 if (whoIsPlayer == 2){
                                     alert("You lost. (horizontal)");
                                 }
 
-                                
+                                var newStoneWon = new Phaser.Geom.Point(x,y);
                                 gameOver = true;
+
+                                return newStoneWon;
                              }
-                    
+
             }
         }
+
+
     }
 
 
@@ -234,9 +242,9 @@
         }
 
         }
-       
 
-            
+
+
     }
 
 
@@ -261,13 +269,13 @@
 
                 var newStone = new Phaser.Geom.Point(thisCol, heigthOfCol);
                 console.log("_______//AI_______");
-           
+
                 tries = 1;
             }
             else {
                 thisCol = Math.floor(Math.random() *7);
             }
-            
+
         }
         while (tries != 1);
 
@@ -279,7 +287,7 @@ function update (){
     if (!gameOver){
          // KEYBOARD RIGHT PRESSED
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT))
-                && (markerPositionX < width)){
+                && (markerPositionX < width-1)){
                 // CHANGE SELECT POSITION IN GAMEFIELD ( -> )
                 markerPositionX += 1;
                 // CHANGE X-POSITION -> IN IMAGE
@@ -306,9 +314,9 @@ function update (){
                         console.log( "h: -> " + h);
                         gameField[h][markerPositionX] = playerid;
 
-                    
 
-                        
+
+
                         this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 
                         printXY();
@@ -340,9 +348,29 @@ function update (){
                 }
             }
 
+
+
+            // Zeichnet die Steine ein, die gewonnen haben bei GameOver.
+            if (gameOver == true){
+
+              for (var y = 0; y < heigth;  y += 1){
+                for (var x = 0; x < width; x += 1) {
+                    if (gameField[y][x] == 1){
+                        this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'win');
+                    }
+                    if (gameField[y][x] == 0){
+                        this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'lost');
+                    }
+                }
+              }
+
+
+            }
+
+
         }
 
-           
+
 
 
 
