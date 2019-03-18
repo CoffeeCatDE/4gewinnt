@@ -10,6 +10,8 @@
     var fieldSelector = 0;
 
     var gameOver = false;
+    // 1 == playerid | 2 == computerid
+    var whoHasWonTheGame = 0;
 
     var selectingPicture;
 
@@ -57,7 +59,7 @@
 
         this.fieldSelectorImage = this.add.image(150,430,'background');
 
-        gameField = [
+        gameField3 = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
@@ -72,6 +74,14 @@
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, playerid, playerid, playerid, 0, 0, 0]
+        ];
+        gameField  = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [computerid, 0, 0, 0, 0, 0,0],
+            [computerid, computerid, 0, 0, 0, 0, 0],
+            [computerid, computerid, 0, 0, 0, 0, 0],
+            [computerid, computerid, 0, 0, 0, 0, 0]
         ];
 
         // draw empty gamefield
@@ -101,14 +111,6 @@
 
     }
 
-    function sleep(milliseconds) {
-      var start = new Date().getTime();
-      for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds){
-          break;
-        }
-      }
-    }
 
     function hasOneWonVertical (whoIsPlayer){
 
@@ -123,13 +125,16 @@
                 {
 
                     if (whoIsPlayer == 1){
+                        gameOver = true;
                         alert("You won!  (vertical)");
+                        return 1;
                    }
 
                    if (whoIsPlayer == 2){
-                        alert("Computer won! (vertical)");
-                   }
                         gameOver = true;
+                        alert("Computer won! (vertical)");
+                        return 2;
+                   }
                 }
 
 
@@ -346,9 +351,29 @@ updateFrames += 1;
                         this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 
                         printXY();
-                        hasOneWonHorizontal(player);
-                        hasOneWonVertical(player);
-                        hasWonDiagonal(player, 0,markerPositionX);
+                        if (hasOneWonVertical(player) == playerid ||
+                            hasOneWonHorizontal(player) == playerid ||
+                            hasWonDiagonal(player, 0,markerPositionX) == playerid
+                        ){
+                          console.log("WIN");
+                          winText = this.add.text(200, 0, 'You have won this game!', { fontSize: '40px', fill: '#0f0' });
+
+                        }
+                        else if (hasOneWonVertical(player) == computerid ||
+                            hasOneWonHorizontal(player) == computerid ||
+                            hasWonDiagonal(player, 0,markerPositionX) == computerid
+                        )
+                        {
+                          console.log("LOST");
+                          winText = this.add.text(200, 0, 'Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
+
+                        }
+                        else{
+
+                        }
+
+
+
 
 
                     }
@@ -379,38 +404,24 @@ updateFrames += 1;
 
 
 
+
             // Zeichnet die Steine ein, die gewonnen haben bei GameOver.
             if (gameOver == true){
 
-              if (player == playerid){
                 for (var y = 0; y < heigth;  y += 1){
-
                     for (var x = 0; x < width; x += 1) {
                             if (gameField[y][x] == playerid){
                               this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'win');
-                    }
-                  }
-                }
-              }
+                              //winText = this.add.text(200, 0, 'You have won this game!', { fontSize: '40px', fill: '#0f0' });
 
-              if (player == computerid){
-
-                for (var y = 0; y < heigth;  y += 1){
-                    for (var x = 0; x < width; x += 1) {
-
-                      if (gameField[y][x] == computerid){
-                        this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'lost');
-                      }
+                            }
+                            if (gameField[y][x] == computerid){
+                                this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'lost');
+                                //winText = this.add.text(200, 0, 'Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
+                            }
                     }
                 }
               }
-
-
-
-
-            }
-
-
         }
 
 
