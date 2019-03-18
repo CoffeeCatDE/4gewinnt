@@ -67,7 +67,7 @@
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, computerid, computerid, computerid, 0, 0]
         ];
-        gameField1  = [
+        gameField2  = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0,0],
@@ -75,13 +75,21 @@
             [0, 0, 0, 0, 0, 0, 0],
             [0, playerid, playerid, playerid, 0, 0, 0]
         ];
+        gameField4  = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [2, 0, 0, 0, 0, 0,0],
+            [2, 0, 0, 0, 0, 0, 0],
+            [2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2]
+        ];
         gameField  = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
-            [computerid, 0, 0, 0, 0, 0,0],
-            [computerid, computerid, 0, 0, 0, 0, 0],
-            [computerid, computerid, 0, 0, 0, 0, 0],
-            [computerid, computerid, 0, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0,0],
+            [2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2]
         ];
 
         // draw empty gamefield
@@ -124,16 +132,18 @@
                    )
                 {
 
-                    if (whoIsPlayer == 1){
+                    if (whoIsPlayer == playerid){
+                        whoHasWonTheGame = playerid;
                         gameOver = true;
                         alert("You won!  (vertical)");
-                        return 1;
+                        return playerid;
                    }
 
-                   if (whoIsPlayer == 2){
+                   if (whoIsPlayer == computerid){
+                        whoHasWonTheGame = computerid;
                         gameOver = true;
                         alert("Computer won! (vertical)");
-                        return 2;
+                        return computerid;
                    }
                 }
 
@@ -158,12 +168,17 @@
 
                                 if (whoIsPlayer == 1){
                                     alert("You won!  (horizontal)");
+                                    whoHasWonTheGame = 1;
+
 
 
                                 }
 
                                 if (whoIsPlayer == 2){
                                     alert("You lost. (horizontal)");
+                                    //var awinText = this.add.text(200, 0, 'SRY, you lost!', { fontSize: '40px', fill: '#f00' });
+                                    whoHasWonTheGame = 2;
+
                                 }
 
                                 var newStoneWon = new Phaser.Geom.Point(x,y);
@@ -263,6 +278,7 @@
             )
         ){
             alert("DIAGONAL WON" + whoIsPlayer);
+            whoHasWonTheGame = whoIsPlayer;
             gameOver = true;
         }
 
@@ -309,11 +325,15 @@
 
 function update (){
 
-updateFrames += 1;
+  if (whoHasWonTheGame == 1){
+    this.add.text(200, 0, '||| You have won this game!', { fontSize: '40px', fill: '#0f0' });
+  }
+  else if (whoHasWonTheGame == 2 ){
+    this.add.text(200, 0, '||| Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
+  }
+  else  {
 
-    if (player == playerid){
-
-    }
+  }
 
     if (!gameOver){
          // KEYBOARD RIGHT PRESSED
@@ -356,21 +376,19 @@ updateFrames += 1;
                             hasWonDiagonal(player, 0,markerPositionX) == playerid
                         ){
                           console.log("WIN");
-                          winText = this.add.text(200, 0, 'You have won this game!', { fontSize: '40px', fill: '#0f0' });
+                          //winText = this.add.text(200, 0, 'You have won this game!', { fontSize: '40px', fill: '#0f0' });
 
                         }
-                        else if (hasOneWonVertical(player) == computerid ||
+                        if (hasOneWonVertical(player) == computerid ||
                             hasOneWonHorizontal(player) == computerid ||
                             hasWonDiagonal(player, 0,markerPositionX) == computerid
                         )
                         {
+                          //winText = this.add.text(200, 0, 'Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
                           console.log("LOST");
-                          winText = this.add.text(200, 0, 'Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
 
                         }
-                        else{
 
-                        }
 
 
 
@@ -407,16 +425,17 @@ updateFrames += 1;
 
             // Zeichnet die Steine ein, die gewonnen haben bei GameOver.
             if (gameOver == true){
-
                 for (var y = 0; y < heigth;  y += 1){
                     for (var x = 0; x < width; x += 1) {
                             if (gameField[y][x] == playerid){
                               this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'win');
+
                               //winText = this.add.text(200, 0, 'You have won this game!', { fontSize: '40px', fill: '#0f0' });
 
                             }
                             if (gameField[y][x] == computerid){
                                 this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'lost');
+
                                 //winText = this.add.text(200, 0, 'Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
                             }
                     }
