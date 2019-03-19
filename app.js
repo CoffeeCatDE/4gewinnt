@@ -31,6 +31,9 @@
             preload: preload,
             create: create,
             update: update
+        },
+        audio: {
+            disableWebAudio: true
         }
     };
 
@@ -49,16 +52,33 @@
         this.load.image('select', 'assets/select.png');
         this.load.image('win', 'assets/win.png');
         this.load.image('lost', 'assets/lost.png');
+
+        this.load.audio('theme', 'assets/audio/ping.mp3');
+        this.load.audio('win', 'assets/audio/win.mp3');
+        this.load.audio('lost', 'assets/audio/lost.mp3');
+        
+     
     }
 
 
     function create ()
     {
+        
+        
         var logo = this.add.image(400, 300, 'apple');
 
         this.fieldSelectorImage = this.add.image(150,430,'background');
-
-        gameField3 = [
+        
+        gameField = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0]
+        ];
+        // TEST GAME FIELDS: 
+        gameFieldaa = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
@@ -74,7 +94,7 @@
             [0, 0, 0, 0, 0, 0, 0],
             [0, playerid, playerid, playerid, 0, 0, 0]
         ];
-        gameField4  = [
+        gameFieldLost  = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [2, 0, 0, 0, 0, 0,0],
@@ -90,14 +110,17 @@
             [2, 2, 2, 2, 2, 2, 2],
             [2, 2, 2, 2, 2, 2, 2]
         ];
-        gameField  = [
+        gameField33  = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0]
+            [2, 0, 0, 0, 0, 0, 2],
+            [2, 0, 0, 0, 0, 0, 2],
+            [2, 0, 0, 0, 0, 0, 2]
         ];
+
+        // END OF TEST GAME FIELDS
+
         // draw empty gamefield
         for (var y = 0; y < heigth;  y += 1){
           for (var x = 0; x < width; x += 1) {
@@ -331,6 +354,8 @@ function checkWin (player){
        
      {
          console.log("@@@: " +player + "has won");
+
+    
      }
 
 
@@ -372,6 +397,9 @@ function update (){
             // KEYBOARD SPACE PRESSED --> New ROUND
             // ONE ROUND ++
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))){
+                var music = this.sound.add('theme');
+                music.play();
+
                 if(player == playerid){
                     if(isRowFree(markerPositionX)){
                         console.log("Row is free!");
@@ -438,6 +466,16 @@ function update (){
 
             // Zeichnet die Steine ein, die gewonnen haben bei GameOver.
             if (gameOver == true){
+                if (whoHasWonTheGame == playerid){
+                    var music = this.sound.add('win');
+                    music.play();
+                }
+               
+                if (whoHasWonTheGame == computerid){
+                    var music = this.sound.add('lost');
+                    music.play();
+                }
+
                 for (var y = 0; y < heigth;  y += 1){
                     for (var x = 0; x < width; x += 1) {
                             if (gameField[y][x] == playerid){
