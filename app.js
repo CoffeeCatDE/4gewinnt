@@ -387,6 +387,7 @@ function update (){
 
     whoHasWonTheGame = 0;
     gameOver = false;
+    markerPositionX = 0;
     this.scene.restart();
   }
 
