@@ -2,7 +2,7 @@
 
     var width = 7;
     var heigth = 6;
-    var offsetx = 40;
+    var offsetx = 35;
     var offsety = 60;
 
     var iconsize = 64;
@@ -28,7 +28,7 @@
 
     var config = {
         type: Phaser.AUTO,
-        width: 465,
+        width: 460,
         height: 420,
         scene: {
             preload: preload,
@@ -59,6 +59,9 @@
         this.load.audio('theme', 'assets/audio/ping.mp3');
         this.load.audio('win', 'assets/audio/win.mp3');
         this.load.audio('lost', 'assets/audio/lost.mp3');
+        this.load.audio('restart', 'assets/audio/restart-riff.mp3');
+
+
 
 
     }
@@ -72,7 +75,7 @@
 
         this.fieldSelectorImage = this.add.image(750,495,'background');
 
-        gameField2 = [
+        gameField = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
@@ -105,7 +108,7 @@
             [2, 2, 2, 2, 2, 2, 2],
             [2, 2, 2, 2, 2, 2, 2]
         ];
-        gameField  = [
+        gameField22  = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0,0],
@@ -377,6 +380,16 @@ function update (){
 
   }
 
+  // NEW ROUND
+  if ((whoHasWonTheGame == playerid || whoHasWonTheGame == computerid) && Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))){
+    var music = this.sound.add('restart');
+    music.play();
+
+    whoHasWonTheGame = 0;
+    gameOver = false;
+    this.scene.restart();
+  }
+
     if (!gameOver){
          // KEYBOARD RIGHT PRESSED
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT))
@@ -494,7 +507,12 @@ function update (){
                             }
                     }
                 }
+
+
+
               }
+
+
         }
 
 
