@@ -67,7 +67,7 @@
         
         var logo = this.add.image(400, 300, 'apple');
 
-        this.fieldSelectorImage = this.add.image(750,490,'background');
+        this.fieldSelectorImage = this.add.image(750,495,'background');
         
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
@@ -386,7 +386,7 @@ function update (){
             }
             // KEYBOARD LEFT PRESSED
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT))
-                && (markerPositionX >= 0)){
+                && (markerPositionX > 0)){
                 // CHANGE SELECT POSITION IN GAMEFIELD ( <- )
                 markerPositionX -= 1;
                 // CHANGE X-POSITION <- IN IMAGE
