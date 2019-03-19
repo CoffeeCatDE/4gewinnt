@@ -2,9 +2,9 @@
 
     var width = 7;
     var heigth = 6;
-    var offsetx = 90;
-    var offsety = 100;
-    var iconsize = 120;
+    var offsetx = 110;
+    var offsety = 200;
+    var iconsize = 128;
     var markerPositionX = 0;
     var markerPositionY = 0;
     var fieldSelector = 0;
@@ -25,8 +25,8 @@
 
     var config = {
         type: Phaser.AUTO,
-        width: 900,
-        height: 800,
+        width: 1500,
+        height: 990,
         scene: {
             preload: preload,
             create: create,
@@ -45,7 +45,7 @@
 
     function  preload ()
     {
-        this.load.image('background', 'assets/background.png',138, 15);
+        this.load.image('background', 'assets/background.png');
         this.load.image('apple', 'assets/apple.png');
         this.load.image('fish', 'assets/fish.png');
         this.load.image('empty', 'assets/empty.png');
@@ -67,7 +67,7 @@
         
         var logo = this.add.image(400, 300, 'apple');
 
-        this.fieldSelectorImage = this.add.image(150,430,'background');
+        this.fieldSelectorImage = this.add.image(750,490,'background');
         
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
@@ -296,7 +296,7 @@
                 gameField[2][x+3] == whoIsPlayer
             )
         ){
-            alert("DIAGONAL WON" + whoIsPlayer);
+            console.log("DIAGONAL WON" + whoIsPlayer);
             whoHasWonTheGame = whoIsPlayer;
             gameOver = true;
 
@@ -365,10 +365,10 @@ function checkWin (player){
 function update (){
 
   if (whoHasWonTheGame == 1){
-    this.add.text(200, 0, '||| You have won this game!', { fontSize: '40px', fill: '#0f0' });
+    this.add.text(100, 50, '||| You have won this game!', { fontSize: '40px', fill: '#0f0' });
   }
   else if (whoHasWonTheGame == 2 ){
-    this.add.text(200, 0, '||| Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
+    this.add.text(100, 50, '||| Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
   }
   else  {
 
@@ -478,13 +478,13 @@ function update (){
 
                 for (var y = 0; y < heigth;  y += 1){
                     for (var x = 0; x < width; x += 1) {
-                            if (gameField[y][x] == playerid){
+                            if (gameField[y][x] == playerid && whoHasWonTheGame == playerid){
                               this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'win');
 
                               //winText = this.add.text(200, 0, 'You have won this game!', { fontSize: '40px', fill: '#0f0' });
 
                             }
-                            if (gameField[y][x] == computerid){
+                            if (gameField[y][x] == computerid && whoHasWonTheGame == computerid ){
                                 this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'lost');
 
                                 //winText = this.add.text(200, 0, 'Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
