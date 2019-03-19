@@ -2,11 +2,14 @@
 
     var width = 7;
     var heigth = 6;
-    var offsetx = 110;
-    var offsety = 200;
-    var iconsize = 128;
+    var offsetx = 40;
+    var offsety = 60;
+
+    var iconsize = 64;
+
     var markerPositionX = 0;
     var markerPositionY = 0;
+
     var fieldSelector = 0;
 
     var gameOver = false;
@@ -25,8 +28,8 @@
 
     var config = {
         type: Phaser.AUTO,
-        width: 1500,
-        height: 990,
+        width: 465,
+        height: 420,
         scene: {
             preload: preload,
             create: create,
@@ -45,7 +48,7 @@
 
     function  preload ()
     {
-        this.load.image('background', 'assets/background.png');
+        this.load.image('background', 'assets/bg.png');
         this.load.image('apple', 'assets/apple.png');
         this.load.image('fish', 'assets/fish.png');
         this.load.image('empty', 'assets/empty.png');
@@ -56,20 +59,20 @@
         this.load.audio('theme', 'assets/audio/ping.mp3');
         this.load.audio('win', 'assets/audio/win.mp3');
         this.load.audio('lost', 'assets/audio/lost.mp3');
-        
-     
+
+
     }
 
 
     function create ()
     {
-        
-        
+
+
         var logo = this.add.image(400, 300, 'apple');
 
         this.fieldSelectorImage = this.add.image(750,495,'background');
-        
-        gameField = [
+
+        gameField2 = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
@@ -77,7 +80,7 @@
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0]
         ];
-        // TEST GAME FIELDS: 
+        // TEST GAME FIELDS:
         gameFieldaa = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
@@ -102,7 +105,7 @@
             [2, 2, 2, 2, 2, 2, 2],
             [2, 2, 2, 2, 2, 2, 2]
         ];
-        gameField5  = [
+        gameField  = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0,0],
@@ -165,7 +168,7 @@
                         gameOver = true;
                         return whoIsPlayer;
                 }
-                
+
 
 
 
@@ -349,13 +352,13 @@ function checkWin (player){
     if (
         hasOneWonHorizontal(player) == player ||
         hasOneWonVertical(player)  == player ||
-        hasWonDiagonal(player) == player 
+        hasWonDiagonal(player) == player
     )
-       
+
      {
          console.log("@@@: " +player + "has won");
 
-    
+
      }
 
 
@@ -365,10 +368,10 @@ function checkWin (player){
 function update (){
 
   if (whoHasWonTheGame == 1){
-    this.add.text(100, 50, '||| You have won this game!', { fontSize: '40px', fill: '#0f0' });
+    this.add.text(10, 0, '||| Good! You have won this game! |||', { fontSize: '20px', fill: '#fff' });
   }
   else if (whoHasWonTheGame == 2 ){
-    this.add.text(100, 50, '||| Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
+    this.add.text(23, 0, '||| Sorry, you lost this game! |||', { fontSize: '20px', fill: '#fff' });
   }
   else  {
 
@@ -442,7 +445,7 @@ function update (){
                     checkWin(player);
                     player = computerid;
                     console.log(":::::::::::::::::::::player: " + player);
-                    
+
                 }
                 // LET AI PLAy
                 if (player == computerid){
@@ -470,7 +473,7 @@ function update (){
                     var music = this.sound.add('win');
                     music.play();
                 }
-               
+
                 if (whoHasWonTheGame == computerid){
                     var music = this.sound.add('lost');
                     music.play();
