@@ -49,7 +49,6 @@
         this.load.image('select', 'assets/select.png');
         this.load.image('win', 'assets/win.png');
         this.load.image('lost', 'assets/lost.png');
-
     }
 
 
@@ -83,7 +82,7 @@
             [2, 2, 2, 2, 2, 2, 2],
             [2, 2, 2, 2, 2, 2, 2]
         ];
-        gameField  = [
+        gameField5  = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0,0],
@@ -91,7 +90,14 @@
             [2, 2, 2, 2, 2, 2, 2],
             [2, 2, 2, 2, 2, 2, 2]
         ];
-
+        gameField  = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0]
+        ];
         // draw empty gamefield
         for (var y = 0; y < heigth;  y += 1){
           for (var x = 0; x < width; x += 1) {
@@ -132,20 +138,11 @@
                    )
                 {
 
-                    if (whoIsPlayer == playerid){
-                        whoHasWonTheGame = playerid;
+                        whoHasWonTheGame = whoIsPlayer;
                         gameOver = true;
-                        alert("You won!  (vertical)");
-                        return playerid;
-                   }
-
-                   if (whoIsPlayer == computerid){
-                        whoHasWonTheGame = computerid;
-                        gameOver = true;
-                        alert("Computer won! (vertical)");
-                        return computerid;
-                   }
+                        return whoIsPlayer;
                 }
+                
 
 
 
@@ -167,24 +164,23 @@
                             (gameField[y][x+3] == whoIsPlayer)){
 
                                 if (whoIsPlayer == 1){
-                                    alert("You won!  (horizontal)");
+                                    console.log("You won!  (horizontal)");
                                     whoHasWonTheGame = 1;
-
-
-
                                 }
 
                                 if (whoIsPlayer == 2){
-                                    alert("You lost. (horizontal)");
+                                    console.log("You lost. (horizontal)");
                                     //var awinText = this.add.text(200, 0, 'SRY, you lost!', { fontSize: '40px', fill: '#f00' });
                                     whoHasWonTheGame = 2;
-
                                 }
 
-                                var newStoneWon = new Phaser.Geom.Point(x,y);
-                                gameOver = true;
 
-                                return newStoneWon;
+
+                                //var newStoneWon = new Phaser.Geom.Point(x,y);
+                                gameOver = true;
+                                return whoIsPlayer;
+
+                                //return newStoneWon;
                              }
 
             }
@@ -280,6 +276,8 @@
             alert("DIAGONAL WON" + whoIsPlayer);
             whoHasWonTheGame = whoIsPlayer;
             gameOver = true;
+
+            return whoIsPlayer;
         }
 
         }
@@ -323,6 +321,22 @@
     return newStone;
 }
 
+function checkWin (player){
+
+    if (
+        hasOneWonHorizontal(player) == player ||
+        hasOneWonVertical(player)  == player ||
+        hasWonDiagonal(player) == player 
+    )
+       
+     {
+         console.log("@@@: " +player + "has won");
+     }
+
+
+
+}
+
 function update (){
 
   if (whoHasWonTheGame == 1){
@@ -355,7 +369,7 @@ function update (){
                 printXY();
             }
 
-            // KEYBOARD SPACE PRESSED
+            // KEYBOARD SPACE PRESSED --> New ROUND
             // ONE ROUND ++
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))){
                 if(player == playerid){
@@ -371,6 +385,7 @@ function update (){
                         this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 
                         printXY();
+                        /**
                         if (hasOneWonVertical(player) == playerid ||
                             hasOneWonHorizontal(player) == playerid ||
                             hasWonDiagonal(player, 0,markerPositionX) == playerid
@@ -389,15 +404,17 @@ function update (){
 
                         }
 
+                        **/
 
 
 
 
 
                     }
+                    checkWin(player);
                     player = computerid;
                     console.log(":::::::::::::::::::::player: " + player);
-
+                    
                 }
                 // LET AI PLAy
                 if (player == computerid){
@@ -408,14 +425,10 @@ function update (){
                     gameField[p.y][p.x] = computerid;
 
                     this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
-                    hasOneWonHorizontal(player);
-                    hasOneWonVertical(player);
-                    hasWonDiagonal(player, 0 ,p.x);
 
-
-
+                    checkWin(player);
                     player = playerid;
-                    console.log(":::::::::::::::::::::player: " + player);
+                   // console.log(":::::::::::::::::::::player: " + player);
 
                 }
             }
