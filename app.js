@@ -70,6 +70,7 @@
     function create ()
     {
 
+     
 
         var logo = this.add.image(400, 300, 'apple');
 
@@ -369,6 +370,7 @@ function checkWin (player){
 }
 
 function update (){
+    
 
   if (whoHasWonTheGame == 1){
     this.add.text(10, 0, '||| Good! You have won this game! |||', { fontSize: '20px', fill: '#fff' });
@@ -392,6 +394,8 @@ function update (){
   }
 
     if (!gameOver){
+
+        
          // KEYBOARD RIGHT PRESSED
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT))
                 && (markerPositionX < width-1)){
@@ -414,8 +418,14 @@ function update (){
             // KEYBOARD SPACE PRESSED --> New ROUND
             // ONE ROUND ++
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))){
+               
+    
                 var music = this.sound.add('theme');
                 music.play();
+
+               
+                
+
 
                 if(player == playerid){
                     if(isRowFree(markerPositionX)){
@@ -427,7 +437,7 @@ function update (){
 
 
 
-                        this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
+                        var ii= this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 
                         printXY();
                         /**
