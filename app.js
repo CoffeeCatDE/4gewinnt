@@ -1,5 +1,6 @@
 //import phaser from 'phaser'
-
+var platforms;
+var playerObj;
     var width = 7;
     var heigth = 6;
     var offsetx = 35;
@@ -33,7 +34,8 @@
 		 physics: {
 			default: "arcade",
 			arcade: {
-				gravity: { y: 150 }
+				gravity: { y: 150 },
+				debug: true
 			}
 		},
         scene: {
@@ -75,9 +77,16 @@
 
     function create ()
     {
+		  
+		platforms = this.physics.add.staticGroup();
+		platforms.create(iconsize/2, heigth*iconsize, 'select').setScale(1).refreshBody();
+		
+		this.physics.add.collider(player, platforms);
+
+
 
         this.fieldSelectorImage = this.add.image(750,495,'background');
-		
+
 		
 		this.anims.create({
 			key: 'down',
@@ -461,10 +470,13 @@ function update (time, delta){
 
                         //var ii= this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 						 //HERE
-						player = this.physics.add.sprite((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple', 0);
-						//player.setBounce(1, 1);
-						player.setCollideWorldBounds(true);
-					
+
+						playerObj = this.physics.add.sprite((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple', 0);
+						//player.setBounce(0, 1);
+						playerObj.setCollideWorldBounds(true);
+						playerObj.setBounce(0.2);
+
+						//this.physics.add.collider(playerObj, platforms);
 
                         printXY();
                         /**
