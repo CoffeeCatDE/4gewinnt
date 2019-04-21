@@ -1,5 +1,6 @@
 //import phaser from 'phaser'
 var platforms;
+var platforms2;
 var playerObj;
     var width = 7;
     var heigth = 6;
@@ -34,8 +35,8 @@ var playerObj;
 		 physics: {
 			default: "arcade",
 			arcade: {
-				gravity: { y: 4200 },
-				debug: true
+				gravity: { y: 333 },
+				debug: false
 			}
 		},
         scene: {
@@ -63,6 +64,8 @@ var playerObj;
         this.load.image('select', 'assets/select.png');
         this.load.image('win', 'assets/win.png');
         this.load.image('lost', 'assets/lost.png');
+        this.load.image('selectEnemy', 'assets/selectEnemy.png');
+        this.load.image('selectPlayer', 'assets/selectPlayer.png');
 
         this.load.audio('theme', 'assets/audio/ping.mp3');
         this.load.audio('win', 'assets/audio/win.mp3');
@@ -79,6 +82,7 @@ var playerObj;
     {
 		  
 		platforms = this.physics.add.staticGroup();
+		platforms2 = this.physics.add.staticGroup();
 		
 
 
@@ -470,10 +474,10 @@ function update (time, delta){
 						 //HERE
 		
 
-						playerObj = this.physics.add.sprite(0,0, 'apple').setScale(0.8);
+						playerObj = this.physics.add.sprite((markerPositionX*iconsize)+offsetx,0, 'apple').setScale(1);
 						playerObj.setCollideWorldBounds(true);
 						playerObj.setBounce(0.1);
-						platforms.create(iconsize/2, (h+2)*iconsize, 'select');
+						platforms.create((markerPositionX*iconsize)+offsetx,((h+1)*iconsize)+offsety, 'apple').setAlpha(0);
 						this.physics.add.collider(playerObj, platforms);
 
 						//this.physics.add.collider(playerObj, platforms);
@@ -520,11 +524,11 @@ function update (time, delta){
 
                     //this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
 
-					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,(p.y*iconsize)+offsety, 'fish');
+					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,0, 'fish');
 					playerObj2.setCollideWorldBounds(true);
 					playerObj2.setBounce(0.1);
-					platforms.create((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'select');
-					this.physics.add.collider(playerObj2, platforms);
+					platforms2.create((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'selectEnemy').setAlpha(0);
+					this.physics.add.collider(playerObj2, platforms2);
 
 
 
