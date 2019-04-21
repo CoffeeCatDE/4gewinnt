@@ -524,11 +524,13 @@ function update (time, delta){
 
                     //this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
 
+
+					// @TODO
 					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,0, 'fish');
 					playerObj2.setCollideWorldBounds(true);
 					playerObj2.setBounce(0.1);
-					platforms2.create((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'selectEnemy').setAlpha(0);
-					this.physics.add.collider(playerObj2, platforms2);
+					platforms.create((p.x*iconsize)+offsetx, ((h-1)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
+					this.physics.add.collider(playerObj2, platforms);
 
 
 
