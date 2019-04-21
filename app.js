@@ -34,7 +34,7 @@ var playerObj;
 		 physics: {
 			default: "arcade",
 			arcade: {
-				gravity: { y: 150 },
+				gravity: { y: 4200 },
 				debug: true
 			}
 		},
@@ -79,9 +79,7 @@ var playerObj;
     {
 		  
 		platforms = this.physics.add.staticGroup();
-		platforms.create(iconsize/2, heigth*iconsize, 'select').setScale(1).refreshBody();
 		
-		this.physics.add.collider(player, platforms);
 
 
 
@@ -470,11 +468,13 @@ function update (time, delta){
 
                         //var ii= this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 						 //HERE
+		
 
-						playerObj = this.physics.add.sprite((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple', 0);
-						//player.setBounce(0, 1);
+						playerObj = this.physics.add.sprite(0,0, 'apple').setScale(0.8);
 						playerObj.setCollideWorldBounds(true);
-						playerObj.setBounce(0.2);
+						playerObj.setBounce(0.1);
+						platforms.create(iconsize/2, (h+2)*iconsize, 'select');
+						this.physics.add.collider(playerObj, platforms);
 
 						//this.physics.add.collider(playerObj, platforms);
 
@@ -518,7 +518,15 @@ function update (time, delta){
 
                     gameField[p.y][p.x] = computerid;
 
-                    this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
+                    //this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
+
+					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,(p.y*iconsize)+offsety, 'fish');
+					playerObj2.setCollideWorldBounds(true);
+					playerObj2.setBounce(0.1);
+					platforms.create((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'select');
+					this.physics.add.collider(playerObj2, platforms);
+
+
 
                     checkWin(player);
                     player = playerid;
