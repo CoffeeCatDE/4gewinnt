@@ -30,6 +30,12 @@
         type: Phaser.AUTO,
         width: 460,
         height: 420,
+		 physics: {
+			default: "arcade",
+			arcade: {
+				gravity: { y: 150 }
+			}
+		},
         scene: {
             preload: preload,
             create: create,
@@ -45,11 +51,11 @@
 
     var game = new Phaser.Game(config);
 
-
     function  preload ()
     {
         this.load.image('background', 'assets/bg.png');
         this.load.image('apple', 'assets/apple.png');
+        this.load.image('apple2', 'assets/apple.png');
         this.load.image('fish', 'assets/fish.png');
         this.load.image('empty', 'assets/empty.png');
         this.load.image('select', 'assets/select.png');
@@ -70,12 +76,22 @@
     function create ()
     {
 
-     
-
-        var logo = this.add.image(400, 300, 'apple');
-
         this.fieldSelectorImage = this.add.image(750,495,'background');
+		
+		
+		this.anims.create({
+			key: 'down',
+			frames: this.anims.generateFrameNumbers('apple', { start: 0, end: 0 }),
+			frameRate: 10,
+			repeat: -1
+		});
+		
+		
+		//this.impact.add.image(0, 0, 'bg').setFixedCollision().setGravity(0).setBodyScale(0.5);
 
+		//this.impact.world.setBounds();
+		
+		
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
@@ -369,8 +385,14 @@ function checkWin (player){
 
 }
 
-function update (){
-    
+function animateIconImage(){
+	
+	
+	//bela.x += 1;
+}
+
+function update (time, delta){
+	
 
   if (whoHasWonTheGame == 1){
     this.add.text(10, 0, '||| Good! You have won this game! |||', { fontSize: '20px', fill: '#fff' });
@@ -418,8 +440,8 @@ function update (){
             // KEYBOARD SPACE PRESSED --> New ROUND
             // ONE ROUND ++
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))){
-               
-    
+				  
+				
                 var music = this.sound.add('theme');
                 music.play();
 
@@ -435,9 +457,14 @@ function update (){
                         gameField[h][markerPositionX] = playerid;
 
 
+              
 
-
-                        var ii= this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
+                        //var ii= this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
+						 //HERE
+						player = this.physics.add.sprite((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple', 0);
+						//player.setBounce(1, 1);
+						player.setCollideWorldBounds(true);
+					
 
                         printXY();
                         /**
