@@ -315,22 +315,43 @@
     function hasWonDiagonal (whoIsPlayer){
 
         for (var x =0; x < 4; x++){
-            if (
+            if ((
+                (
+                    gameField[5][x] == whoIsPlayer
+                )
+                &&
+                (
+                    gameField[4][x+1] == whoIsPlayer
+                )
+                &&
+                (
+                    gameField[3][x+2] == whoIsPlayer
+                )
+                &&
+                (
+                    gameField[2][x+3] == whoIsPlayer
+                )
+            )
+
+            ||
+
             (
-                gameField[5][x] == whoIsPlayer
+                gameField[5][x+3] == whoIsPlayer
+            )
+
+            && 
+            (
+                gameField[4][x+2] == whoIsPlayer
             )
             &&
             (
-                gameField[4][x+1] == whoIsPlayer
-            )
-             &&
-            (
-                gameField[3][x+2] == whoIsPlayer
-            )
+                gameField[3][x+1] == whoIsPlayer
+            ) 
             &&
             (
-                gameField[2][x+3] == whoIsPlayer
+                gameField[2][x] == whoIsPlayer
             )
+
         ){
             console.log("DIAGONAL WON" + whoIsPlayer);
             whoHasWonTheGame = whoIsPlayer;
