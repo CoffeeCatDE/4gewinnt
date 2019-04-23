@@ -35,8 +35,8 @@ var playerObj;
 		 physics: {
 			default: "arcade",
 			arcade: {
-				gravity: { y: 333 },
-				debug: false
+				gravity: { y: 2500 },
+				debug: true
 			}
 		},
         scene: {
@@ -401,8 +401,10 @@ function animateIconImage(){
 	
 	//bela.x += 1;
 }
-
-function update (time, delta){
+function sleep(milliseconds) {
+ return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+async function update (time, delta){
 	
 
   if (whoHasWonTheGame == 1){
@@ -452,7 +454,7 @@ function update (time, delta){
             // ONE ROUND ++
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))){
 				  
-				
+
                 var music = this.sound.add('theme');
                 music.play();
 
@@ -483,6 +485,8 @@ function update (time, delta){
 						//this.physics.add.collider(playerObj, platforms);
 
                         printXY();
+						
+
                         /**
                         if (hasOneWonVertical(player) == playerid ||
                             hasOneWonHorizontal(player) == playerid ||
@@ -524,7 +528,7 @@ function update (time, delta){
 
                     //this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
 
-
+					await sleep(1300);
 					// @TODO
 					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,0, 'fish');
 					playerObj2.setCollideWorldBounds(true);
