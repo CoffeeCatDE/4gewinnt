@@ -454,6 +454,7 @@ async function update (time, delta){
             // ONE ROUND ++
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))){
 				  
+				
 
                 var music = this.sound.add('theme');
                 music.play();
@@ -476,10 +477,12 @@ async function update (time, delta){
 						 //HERE
 		
 
+						
 						playerObj = this.physics.add.sprite((markerPositionX*iconsize)+offsetx,0, 'apple').setScale(1);
 						playerObj.setCollideWorldBounds(true);
 						playerObj.setBounce(0.1);
-						platforms.create((markerPositionX*iconsize)+offsetx,((h+1)*iconsize)+offsety, 'apple').setAlpha(0);
+						platforms.create((markerPositionX*iconsize)+offsetx,((h+1)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
+
 						this.physics.add.collider(playerObj, platforms);
 
 						//this.physics.add.collider(playerObj, platforms);
@@ -528,13 +531,15 @@ async function update (time, delta){
 
                     //this.add.image((p.x*iconsize)+offsetx, (p.y*iconsize)+offsety, 'fish');
 
-					await sleep(1300);
+					await sleep(300);
 					// @TODO
-					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,0, 'fish');
+					
+					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,0, 'fish').setScale(1);
 					playerObj2.setCollideWorldBounds(true);
 					playerObj2.setBounce(0.1);
-					platforms.create((p.x*iconsize)+offsetx, ((p.y+1)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
-					this.physics.add.collider(playerObj2, platforms);
+					platforms2.create((p.x*iconsize)+offsetx, ((p.y+1)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
+
+					this.physics.add.collider(playerObj2, platforms2);
 
 
 
