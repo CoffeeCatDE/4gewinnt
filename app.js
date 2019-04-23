@@ -1,8 +1,9 @@
 // @TODO DIAGONAL WIN CHECK (RIGHT TO LEFT) BUG!!!
 
-var platforms;
-var platforms2;
-var playerObj;
+    var platforms;
+    var platforms2;
+    var playerObj;
+    
     var width = 7;
     var heigth = 6;
     var offsetx = 35;
