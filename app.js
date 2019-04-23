@@ -107,6 +107,15 @@
 		
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 2, 1, 0, 0, 0],
+            [0, 0, 2, 0, 1, 0, 0],
+            [0, 0, 2, 0, 0, 1, 0],
+            [0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0]
+        ];    
+        
+        gameFieldNUll = [
+            [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
@@ -332,40 +341,48 @@
                     gameField[2][x+3] == whoIsPlayer
                 )
             )
+           
+        )
+            {
+                console.log("DIAGONAL WON" + whoIsPlayer);
+                whoHasWonTheGame = whoIsPlayer;
+                gameOver = true;
 
-            ||
-
-            (
-                gameField[5][x+3] == whoIsPlayer
-            )
-
-            && 
-            (
-                gameField[4][x+2] == whoIsPlayer
-            )
-            &&
-            (
-                gameField[3][x+1] == whoIsPlayer
-            ) 
-            &&
-            (
-                gameField[2][x] == whoIsPlayer
-            )
-
-        ){
-            console.log("DIAGONAL WON" + whoIsPlayer);
-            whoHasWonTheGame = whoIsPlayer;
-            gameOver = true;
-
-            return whoIsPlayer;
+                return whoIsPlayer;
+            }
         }
+        for (var x =3; x >= 0; x--){
+            for (var yy = 0; yy <= 3; yy++){
+                if (
+                    
+                        (
+                            gameField[5+yy][3+x] == whoIsPlayer
+                        )
 
+                        && 
+                        (
+                            gameField[4+yy][2+x] == whoIsPlayer
+                        )
+                        &&
+                        (
+                            gameField[3+yy][1+x] == whoIsPlayer
+                        ) 
+                        &&
+                        (
+                            gameField[2+yy][x] == whoIsPlayer
+                        )
+                    )
+                
+                {
+                    console.log("DIAGONAL WON (RIGHT TO LEFT)" + whoIsPlayer);
+                    whoHasWonTheGame = whoIsPlayer;
+                    gameOver = true;
+        
+                    return whoIsPlayer;
+                }
+            }
         }
-
-
-
     }
-
 
     /**
      * @TODO
