@@ -104,14 +104,32 @@
 
 		//this.impact.world.setBounds();
 		
-		
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 2, 1, 0, 0, 0],
-            [0, 0, 2, 0, 1, 0, 0],
-            [0, 0, 2, 0, 0, 1, 0],
-            [0, 0, 1, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 2],
+            [0, 0, 0, 0, 1, 1, 1],
+            [0, 0, 0, 1, 2, 2, 1]
+        ];
+        // TEST GAM
+        
+        gameFieldDIAGONALfin2 = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 2,1, 0, 0],
+            [0, 0, 0, 2, 1, 1, 0],
+            [0, 0, 0,2, 1, 1, 1]
+        ];    
+        
+        gameFieldb = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 2,1, 0, 0],
+            [0, 0, 0, 2, 1, 1, 0],
+            [0, 0, 0,2, 1, 1, 1]
         ];    
         
         gameFieldNUll = [
@@ -323,6 +341,40 @@
     **/
     function hasWonDiagonal (whoIsPlayer){
 
+
+
+        for (var y= 5; y >= 3; y--){ 
+            console.log("AA" + y);
+            for (var x= 0; x <= 4; x++){
+                console.log("BB" + x);
+
+                if(
+                    (
+                        gameField[y][x+3] == whoIsPlayer
+                    )
+                    &&
+                    (
+                        gameField[y-1][x+2] == whoIsPlayer
+                    )
+                    &&
+                    (
+                        gameField[y-2][x+1] == whoIsPlayer
+                    )
+                    &&
+                    (
+                        gameField[y-3][x] == whoIsPlayer
+                    )
+                )
+                {
+                    console.log("DIAGONAL WON R->L" + whoIsPlayer);
+                    whoHasWonTheGame = whoIsPlayer;
+                    gameOver = true;
+    
+                    return whoIsPlayer;
+                }
+            }
+        }
+
         for (var x =0; x < 4; x++){
             if ((
                 (
@@ -351,37 +403,7 @@
                 return whoIsPlayer;
             }
         }
-        for (var x =3; x >= 0; x--){
-            for (var yy = 0; yy <= 3; yy++){
-                if (
-                    
-                        (
-                            gameField[5+yy][3+x] == whoIsPlayer
-                        )
 
-                        && 
-                        (
-                            gameField[4+yy][2+x] == whoIsPlayer
-                        )
-                        &&
-                        (
-                            gameField[3+yy][1+x] == whoIsPlayer
-                        ) 
-                        &&
-                        (
-                            gameField[2+yy][x] == whoIsPlayer
-                        )
-                    )
-                
-                {
-                    console.log("DIAGONAL WON (RIGHT TO LEFT)" + whoIsPlayer);
-                    whoHasWonTheGame = whoIsPlayer;
-                    gameOver = true;
-        
-                    return whoIsPlayer;
-                }
-            }
-        }
     }
 
     /**
