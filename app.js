@@ -107,10 +107,10 @@
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0]
+            [1, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0]
         ];
         // TEST GAM
         
@@ -226,6 +226,7 @@
 
                         whoHasWonTheGame = whoIsPlayer;
                         gameOver = true;
+                        console.log("HUHU");
                         return whoIsPlayer;
                 }
 
@@ -667,3 +668,4 @@ async function update (time, delta){
     }
 
     create();
+
