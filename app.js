@@ -1,4 +1,5 @@
 // @TODO Particle Emitter for Enemy better Position (not X Pos. of Player)
+// @TODO clever and simple enemy AI
 
     var platforms;
     var platforms2;
