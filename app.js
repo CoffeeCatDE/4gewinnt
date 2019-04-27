@@ -1,4 +1,4 @@
-// @TODO DIAGONAL WIN CHECK (RIGHT TO LEFT) BUG!!!
+// @TODO Particle Emitter for Enemy better Position (not X Pos. of Player)
 
     var platforms;
     var platforms2;
@@ -31,6 +31,7 @@
     var updateFrames = 0;
  
     var particles2;
+    var particles3;
     var config = {
         type: Phaser.AUTO,
         width: 460,
@@ -75,7 +76,6 @@
         this.load.audio('lost', 'assets/audio/lost.mp3');
         this.load.audio('restart', 'assets/audio/restart-riff.mp3');
 
-        this.load.atlas('flares', 'assets/particles/flares.png', 'assets/particles/flares.json');
 
 
 
@@ -111,10 +111,10 @@
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0]
+            [0, 2, 0, 0, 0, 0, 0],
+            [0, 2, 0, 0, 0, 0, 0],
+            [0, 2, 0, 0, 0, 0, 0],
+            [0, 2, 2, 1, 0, 0, 0]
         ];
         // TEST GAM
         
@@ -211,45 +211,36 @@
 
         this.fieldSelectorImage = this.add.image((markerPositionX*iconsize)+offsetx, (markerPositionY*iconsize)+offsety, 'select');
 
-        particles2 = this.add.particles('flares');
+        particles2 = this.add.particles('apple');
+        particles3 = this.add.particles('fish');
 
      
     
     }
 
     function particleEnd (player){ 
-        var well = particles2.createGravityWell({
-            x: 200,
-            y: 300,
-            power: 3,
-            epsilon: 100,
-            gravity: 50
-        });
-        var emitter;
-
+        
         if (player == playerid){
-            emitter = particles2.createEmitter({
-                frame: [ 'white', 'green' ],
-                x: 250,
-                y: 200,
-                lifespan: 4000,
-                speed: 0.01,
-                scale: { start:2.2, end: 0 },
-                blendMode: 'ADD'
-            });
+
+            var emitter = particles2.createEmitter();
+            var h =getHeigthOfColumn(markerPositionX);
+
+            console.log(getHeigthOfColumn("EMITTER AT " + markerPositionX));
+            emitter.setPosition((markerPositionX+0.5)*iconsize,  (h+2)*iconsize);
+            emitter.setSpeed(300);
+            emitter.setLifespan(2000);
+            emitter.setScale(0.7);
         }
         else
         {
-            emitter = particles2.createEmitter({
-                frame: [ 'white', 'red' ],
-                x: 250,
-                y: 200,
-                lifespan: 4000,
-                speed: 0.01,
-                scale: { start:2.2, end: 0 },
-                blendMode: 'ADD'
-            });
+            var emitter = particles3.createEmitter();
+            var h =getHeigthOfColumn(markerPositionX);
 
+            console.log(getHeigthOfColumn("EMITTER AT " + markerPositionX));
+            emitter.setPosition((markerPositionX+0.5)*iconsize,  (h+2)*iconsize);
+            emitter.setSpeed(300);
+            emitter.setLifespan(2000);
+            emitter.setScale(0.7);
         }    
     }
 
