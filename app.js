@@ -29,7 +29,8 @@
     var fieldSelectorImage;
 
     var updateFrames = 0;
-
+ 
+    var particles2;
     var config = {
         type: Phaser.AUTO,
         width: 460,
@@ -74,6 +75,9 @@
         this.load.audio('lost', 'assets/audio/lost.mp3');
         this.load.audio('restart', 'assets/audio/restart-riff.mp3');
 
+        this.load.atlas('flares', 'assets/particles/flares.png', 'assets/particles/flares.json');
+
+
 
 
 
@@ -82,7 +86,7 @@
 
     function create ()
     {
-		  
+		 
 		platforms = this.physics.add.staticGroup();
 		platforms2 = this.physics.add.staticGroup();
 		
@@ -207,8 +211,46 @@
 
         this.fieldSelectorImage = this.add.image((markerPositionX*iconsize)+offsetx, (markerPositionY*iconsize)+offsety, 'select');
 
+        particles2 = this.add.particles('flares');
 
+     
+    
+    }
 
+    function particleEnd (player){ 
+        var well = particles2.createGravityWell({
+            x: 200,
+            y: 300,
+            power: 3,
+            epsilon: 100,
+            gravity: 50
+        });
+        var emitter;
+
+        if (player == playerid){
+            emitter = particles2.createEmitter({
+                frame: [ 'white', 'green' ],
+                x: 250,
+                y: 200,
+                lifespan: 4000,
+                speed: 0.01,
+                scale: { start:2.2, end: 0 },
+                blendMode: 'ADD'
+            });
+        }
+        else
+        {
+            emitter = particles2.createEmitter({
+                frame: [ 'white', 'red' ],
+                x: 250,
+                y: 200,
+                lifespan: 4000,
+                speed: 0.01,
+                scale: { start:2.2, end: 0 },
+                blendMode: 'ADD'
+            });
+
+        }    
     }
 
 
@@ -425,7 +467,7 @@ function checkWin (player){
 
      {
          console.log("@@@: " +player + "has won");
-
+         particleEnd(player);
 
      }
 
@@ -445,10 +487,10 @@ async function update (time, delta){
 	
 
   if (whoHasWonTheGame == 1){
-    this.add.text(10, 0, '||| Good! You have won this game! |||', { fontSize: '20px', fill: '#fff' });
+    this.add.text(10, 0, '||| Good! You have won this game! |||', { fontSize: '20px', fill: '#0f0' });
   }
   else if (whoHasWonTheGame == 2 ){
-    this.add.text(23, 0, '||| Sorry, you lost this game! |||', { fontSize: '20px', fill: '#fff' });
+    this.add.text(23, 0, '||| Sorry, you lost this game! |||', { fontSize: '20px', fill: '#f00' });
   }
   else  {
 
