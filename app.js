@@ -3,7 +3,7 @@
     var platforms;
     var platforms2;
     var playerObj;
-    
+    var p;
     var width = 7;
     var heigth = 6;
     var offsetx = 35;
@@ -111,10 +111,10 @@
         gameField = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
-            [0, 2, 0, 0, 0, 0, 0],
-            [0, 2, 0, 0, 0, 0, 0],
-            [0, 2, 0, 0, 0, 0, 0],
-            [0, 2, 2, 1, 0, 0, 0]
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 2, 2, 2, 0]
         ];
         // TEST GAM
         
@@ -237,7 +237,7 @@
             var h =getHeigthOfColumn(markerPositionX);
 
             console.log(getHeigthOfColumn("EMITTER AT " + markerPositionX));
-            emitter.setPosition((markerPositionX+0.5)*iconsize,  (h+2)*iconsize);
+            emitter.setPosition((p.x+0.5)*iconsize, (p.y+1)*iconsize);
             emitter.setSpeed(300);
             emitter.setLifespan(2000);
             emitter.setScale(0.7);
@@ -594,7 +594,7 @@ async function update (time, delta){
                 // LET AI PLAy
                 if (player == computerid){
                     console.log(">>>>AI<<<<<");
-                    var p =letAIplay();
+                    p =letAIplay();
                     console.log("NEW POINT (AI) X:" + p.x + "Y: " + p.y);
 
                     gameField[p.y][p.x] = computerid;
