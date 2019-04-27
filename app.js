@@ -1,5 +1,8 @@
 // @TODO Particle Emitter for Enemy better Position (not X Pos. of Player)
 // @TODO clever and simple enemy AI
+// @TODO Bugfix: After Last Round of Player: Not again a Round for Computer (put Coin)
+// @TODO Change variable names to self explaining
+// @TODO CodeDoc for functions and Game
 
     var platforms;
     var platforms2;
