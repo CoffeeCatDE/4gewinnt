@@ -1,4 +1,3 @@
-// @TODO Particle Emitter for Enemy better Position (not X Pos. of Player)
 // @TODO clever and simple enemy AI
 // @TODO Bugfix: After Last Round of Player: Not again a Round for Computer (put Coin)
 // @TODO Bugfix: Fast insert of a coin -> buggy insert
@@ -471,11 +470,7 @@ function checkWin (player){
 
 }
 
-function animateIconImage(){
-	
-	
-	//bela.x += 1;
-}
+
 function sleep(milliseconds) {
  return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
