@@ -4,16 +4,19 @@
 // @TODO Change variable names to self explaining
 // @TODO CodeDoc for functions and Game
 
-    var platforms;
-    var platforms2;
-    var playerObj;
+    var physicsApples;
+    var physicsFishes;
+
+    var apples;
+    var fishes;
+
     var p;
 
     /**
      * GAME LOGIC VARIABLES
      */
-    var width = 7;
-    var heigth = 6;
+    var gamefieldWidth = 7;
+    var gamefieldHeight = 6;
 
     var markerPositionX = 0;
     var markerPositionY = 0;
@@ -38,11 +41,9 @@
 
     var selectingPicture; 
     var fieldSelectorImage;
-
-    var updateFrames = 0;
  
-    var particles2;
-    var particles3;
+    var particlesApples;
+    var particlesFish;
 
 
     var config = {
@@ -79,9 +80,6 @@
         this.load.image('fish', 'assets/fish.png');
         this.load.image('empty', 'assets/empty.png');
         this.load.image('select', 'assets/select.png');
-        this.load.image('win', 'assets/win.png');
-        this.load.image('lost', 'assets/lost.png');
-        this.load.image('selectEnemy', 'assets/selectEnemy.png');
         this.load.image('selectPlayer', 'assets/selectPlayer.png');
 
         this.load.audio('theme', 'assets/audio/ping.mp3');
@@ -100,8 +98,8 @@
     function create ()
     {
 		 
-		platforms = this.physics.add.staticGroup();
-		platforms2 = this.physics.add.staticGroup();
+		physicsApples = this.physics.add.staticGroup();
+		physicsFishes = this.physics.add.staticGroup();
 		
 
 
@@ -202,8 +200,8 @@
         // END OF TEST GAME FIELDS
 
         // draw empty gamefield
-        for (var y = 0; y < heigth;  y += 1){
-          for (var x = 0; x < width; x += 1) {
+        for (var y = 0; y < gamefieldHeight;  y += 1){
+          for (var x = 0; x < gamefieldWidth; x += 1) {
               if (gameField[y][x] == 0){
                   this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety-65 , 'empty');
               }
@@ -212,8 +210,8 @@
 
         this.fieldSelectorImage = this.add.image((markerPositionX*iconsize)+offsetx, iconsize-13 , 'select');
 
-        particles2 = this.add.particles('apple');
-        particles3 = this.add.particles('fish');
+        particlesApples = this.add.particles('apple');
+        particlesFishes = this.add.particles('fish');
 
      
     
@@ -223,7 +221,7 @@
         
         if (player == playerid){
 
-            var emitter = particles2.createEmitter();
+            var emitter = particlesApples.createEmitter();
             var h =getHeigthOfColumn(markerPositionX);
 
             console.log(getHeigthOfColumn("EMITTER AT " + markerPositionX));
@@ -234,7 +232,7 @@
         }
         else
         {
-            var emitter = particles3.createEmitter();
+            var emitter = particlesFishes.createEmitter();
             var h =getHeigthOfColumn(markerPositionX);
 
             console.log(getHeigthOfColumn("EMITTER AT " + markerPositionX));
@@ -251,8 +249,8 @@
         /**
         TEST HORIZONTAL WIN SUCCESS
         **/
-        for (var y = 0;  y < heigth; y++){
-            for (var x =0; x < width; x++ ){
+        for (var y = 0;  y < gamefieldHeight; y++){
+            for (var x =0; x < gamefieldWidth; x++ ){
                 if ((gameField[y][x] == whoIsPlayer) &&
                     (gameField[y][x+1] == whoIsPlayer) &&
                         (gameField[y][x+2] == whoIsPlayer) &&
@@ -504,7 +502,7 @@ async function update (time, delta){
         
          // KEYBOARD RIGHT PRESSED
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT))
-                && (markerPositionX < width-1)){
+                && (markerPositionX <= gamefieldWidth-2)){
                 // CHANGE SELECT POSITION IN GAMEFIELD ( -> )
                 markerPositionX += 1;
                 // CHANGE X-POSITION -> IN IMAGE
@@ -542,13 +540,12 @@ async function update (time, delta){
 		
 
 						
-                        playerObj = this.physics.add.sprite((markerPositionX*iconsize)+offsetx,0, 'apple') ;
+                        apples = this.physics.add.sprite((markerPositionX*iconsize)+offsetx,0, 'apple') ;
+						apples.setCollideWorldBounds(true);
+						apples.setBounce(0.2);
+						physicsApples.create((markerPositionX*iconsize)+offsetx,((h)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
 
-						playerObj.setCollideWorldBounds(true);
-						playerObj.setBounce(0.2);
-						platforms.create((markerPositionX*iconsize)+offsetx,((h)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
-
-						this.physics.add.collider(playerObj, platforms);
+						this.physics.add.collider(apples, physicsApples);
 
                         printXY();
 				
@@ -572,12 +569,12 @@ async function update (time, delta){
 					await sleep(300);
 					// @TODO
 					
-					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,0, 'fish').setScale(1);
-					playerObj2.setCollideWorldBounds(true);
-					playerObj2.setBounce(0.1);
-					platforms2.create((p.x*iconsize)+offsetx, ((p.y)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
+					fishes = this.physics.add.sprite((p.x*iconsize)+offsetx,0, 'fish').setScale(1);
+					fishes.setCollideWorldBounds(true);
+					fishes.setBounce(0.1);
+					physicsFishes.create((p.x*iconsize)+offsetx, ((p.y)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
 
-					this.physics.add.collider(playerObj2, platforms2);
+					this.physics.add.collider(fishes, physicsFishes);
 
 
 
