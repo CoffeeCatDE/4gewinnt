@@ -10,10 +10,11 @@
     var p;
     var width = 7;
     var heigth = 6;
-    var offsetx = 35;
-    var offsety = 60;
+    var offsetx = 50;
+    var offsety = 105;
 
-    var iconsize = 64;
+    // icon graphics must have the same size in pixel!
+    var iconsize = 90;
 
     var markerPositionX = 0;
     var markerPositionY = 0;
@@ -38,8 +39,8 @@
     var particles3;
     var config = {
         type: Phaser.AUTO,
-        width: 460,
-        height: 420,
+        width: 800,
+        height: 600,
 		 physics: {
 			default: "arcade",
 			arcade: {
@@ -662,21 +663,6 @@ async function update (time, delta){
 
 
         }
-
-
-
-
-
-
-
-
-
-
-        // this.add.image((markerPositionX*(iconsize)+offsetx), (markerPositionY*(iconsize))+offsety, 'apple');
-
-
-
-
     }
 
 
