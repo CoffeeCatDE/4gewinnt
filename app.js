@@ -8,39 +8,46 @@
     var platforms2;
     var playerObj;
     var p;
+
+    /**
+     * GAME LOGIC VARIABLES
+     */
     var width = 7;
     var heigth = 6;
-    var offsetx = 50;
-    var offsety = 105;
-
-    // icon graphics must have the same size in pixel!
-    var iconsize = 90;
-
     var markerPositionX = 0;
     var markerPositionY = 0;
-
     var fieldSelector = 0;
-
     var gameOver = false;
     // 1 == playerid | 2 == computerid
     var whoHasWonTheGame = 0;
-
-    var selectingPicture;
-
-    // SWITCH FOR GAME LOGIC: 1 = user; 2 = AI
     var player = 1;
     var playerid = 1;
     var computerid = 2;
+
+
+
+    /**
+     * GFX VARIABLES FOR LOOK
+     */
+    // icon graphics must have the same size in pixel!
+    var iconsize = 100;
+    var offsetx = 50;
+    var offsety = 100;
+
+
+    var selectingPicture; 
     var fieldSelectorImage;
 
     var updateFrames = 0;
  
     var particles2;
     var particles3;
+
+
     var config = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 700,
+        height: 650,
 		 physics: {
 			default: "arcade",
 			arcade: {
@@ -199,15 +206,8 @@
               if (gameField[y][x] == 0){
                   this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'empty');
               }
-              else if (gameField[y][x] == 1){
-                  this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'apple');
-
-              }
-              else if (gameField[y][x] == 2){
-                  this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'fish');
-
-              }
-              else if (gameField[y][x] == 3){
+              
+              if (gameField[y][x] == 3){
                   this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'select');
 
               }
