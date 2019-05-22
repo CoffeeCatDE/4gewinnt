@@ -14,6 +14,7 @@
      */
     var width = 7;
     var heigth = 6;
+
     var markerPositionX = 0;
     var markerPositionY = 0;
     var fieldSelector = 0;
@@ -32,7 +33,7 @@
     // icon graphics must have the same size in pixel!
     var iconsize = 100;
     var offsetx = 50;
-    var offsety = 100;
+    var offsety = 150;
 
 
     var selectingPicture; 
@@ -47,11 +48,11 @@
     var config = {
         type: Phaser.AUTO,
         width: 700,
-        height: 650,
+        height: 700,
 		 physics: {
 			default: "arcade",
 			arcade: {
-				gravity: { y: 2500 },
+				gravity: { y: 2800 },
 				debug: false
 			}
 		},
@@ -204,17 +205,12 @@
         for (var y = 0; y < heigth;  y += 1){
           for (var x = 0; x < width; x += 1) {
               if (gameField[y][x] == 0){
-                  this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'empty');
-              }
-              
-              if (gameField[y][x] == 3){
-                  this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'select');
-
+                  this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety-65 , 'empty');
               }
           }
         }
 
-        this.fieldSelectorImage = this.add.image((markerPositionX*iconsize)+offsetx, (markerPositionY*iconsize)+offsety, 'select');
+        this.fieldSelectorImage = this.add.image((markerPositionX*iconsize)+offsetx, iconsize-13 , 'select');
 
         particles2 = this.add.particles('apple');
         particles3 = this.add.particles('fish');
@@ -529,14 +525,8 @@ async function update (time, delta){
             // ONE ROUND ++
             if (Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE))){
 				  
-				
-
-                var music = this.sound.add('theme');
+		        var music = this.sound.add('theme');
                 music.play();
-
-               
-                
-
 
                 if(player == playerid){
                     if(isRowFree(markerPositionX)){
@@ -546,50 +536,22 @@ async function update (time, delta){
                         gameField[h][markerPositionX] = playerid;
 
 
-              
 
                         //var ii= this.add.image((markerPositionX*iconsize)+offsetx, (h*iconsize)+offsety, 'apple');
 						 //HERE
 		
 
 						
-						playerObj = this.physics.add.sprite((markerPositionX*iconsize)+offsetx,0, 'apple').setScale(1);
+                        playerObj = this.physics.add.sprite((markerPositionX*iconsize)+offsetx,0, 'apple') ;
+
 						playerObj.setCollideWorldBounds(true);
-						playerObj.setBounce(0.1);
-						platforms.create((markerPositionX*iconsize)+offsetx,((h+1)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
+						playerObj.setBounce(0.2);
+						platforms.create((markerPositionX*iconsize)+offsetx,((h)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
 
 						this.physics.add.collider(playerObj, platforms);
 
-						//this.physics.add.collider(playerObj, platforms);
-
                         printXY();
-						
-
-                        /**
-                        if (hasOneWonVertical(player) == playerid ||
-                            hasOneWonHorizontal(player) == playerid ||
-                            hasWonDiagonal(player, 0,markerPositionX) == playerid
-                        ){
-                          console.log("WIN");
-                          //winText = this.add.text(200, 0, 'You have won this game!', { fontSize: '40px', fill: '#0f0' });
-
-                        }
-                        if (hasOneWonVertical(player) == computerid ||
-                            hasOneWonHorizontal(player) == computerid ||
-                            hasWonDiagonal(player, 0,markerPositionX) == computerid
-                        )
-                        {
-                          //winText = this.add.text(200, 0, 'Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
-                          console.log("LOST");
-
-                        }
-
-                        **/
-
-
-
-
-
+				
                     }
                     checkWin(player);
                     player = computerid;
@@ -613,7 +575,7 @@ async function update (time, delta){
 					playerObj2 = this.physics.add.sprite((p.x*iconsize)+offsetx,0, 'fish').setScale(1);
 					playerObj2.setCollideWorldBounds(true);
 					playerObj2.setBounce(0.1);
-					platforms2.create((p.x*iconsize)+offsetx, ((p.y+1)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
+					platforms2.create((p.x*iconsize)+offsetx, ((p.y)*iconsize)+offsety, 'selectEnemy').setAlpha(0);
 
 					this.physics.add.collider(playerObj2, platforms2);
 
@@ -626,9 +588,6 @@ async function update (time, delta){
                 }
             }
 
-
-
-
             // Zeichnet die Steine ein, die gewonnen haben bei GameOver.
             if (gameOver == true){
                 if (whoHasWonTheGame == playerid){
@@ -640,25 +599,6 @@ async function update (time, delta){
                     var music = this.sound.add('lost');
                     music.play();
                 }
-
-                for (var y = 0; y < heigth;  y += 1){
-                    for (var x = 0; x < width; x += 1) {
-                            if (gameField[y][x] == playerid && whoHasWonTheGame == playerid){
-                              this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'win');
-
-                              //winText = this.add.text(200, 0, 'You have won this game!', { fontSize: '40px', fill: '#0f0' });
-
-                            }
-                            if (gameField[y][x] == computerid && whoHasWonTheGame == computerid ){
-                                this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety, 'lost');
-
-                                //winText = this.add.text(200, 0, 'Sorry, you lost!', { fontSize: '40px', fill: '#f00' });
-                            }
-                    }
-                }
-
-
-
               }
 
 
