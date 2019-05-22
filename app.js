@@ -4,31 +4,32 @@
 // @TODO Change variable names to self explaining
 // @TODO CodeDoc for functions and Game
 
-    var physicsApples;
-    var physicsFishes;
 
-    var apples;
-    var fishes;
 
-    var p;
+   
+   
 
     /**
      * GAME LOGIC VARIABLES
+     * 1 == playerid | 2 == computerid
      */
+    var gameField;
     var gamefieldWidth = 7;
     var gamefieldHeight = 6;
-
     var markerPositionX = 0;
     var markerPositionY = 0;
     var fieldSelector = 0;
     var gameOver = false;
-    // 1 == playerid | 2 == computerid
     var whoHasWonTheGame = 0;
     var player = 1;
     var playerid = 1;
     var computerid = 2;
 
-
+    // GAME PHYSICS (COLLECTION)
+    var particlesApples;
+    var particlesFish;
+    var physicsApples;
+    var physicsFishes;
 
     /**
      * GFX VARIABLES FOR LOOK
@@ -37,15 +38,13 @@
     var iconsize = 100;
     var offsetx = 50;
     var offsety = 150;
-
-
     var selectingPicture; 
     var fieldSelectorImage;
+
+     // GAME PICTURE OBJECTS (COLLECTION)
+     var apples;
+     var fishes;
  
-    var particlesApples;
-    var particlesFish;
-
-
     var config = {
         type: Phaser.AUTO,
         width: 700,
@@ -68,7 +67,7 @@
     };
 
 
-    var gameField;
+    
 
     var game = new Phaser.Game(config);
 
@@ -129,7 +128,7 @@
         ];
         // TEST GAM
         
-        gameFieldDIAGONALfin2 = [
+        gameField333 = [
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
@@ -199,15 +198,26 @@
 
         // END OF TEST GAME FIELDS
 
-        // draw empty gamefield
-        for (var y = 0; y < gamefieldHeight;  y += 1){
-          for (var x = 0; x < gamefieldWidth; x += 1) {
-              if (gameField[y][x] == 0){
-                  this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety-65 , 'empty');
-              }
-          }
-        }
+       // draw empty gamefield
+       for (var y = 0; y < gamefieldHeight;  y += 1){
+        for (var x = 0; x < gamefieldWidth; x += 1) {
+            if (gameField[y][x] == 0){
+                this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety-65 , 'empty');
+            }
+            else if (gameField[y][x] == 1){
+                this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety-65, 'apple');
 
+            }
+            else if (gameField[y][x] == 2){
+                this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety-65, 'fish');
+
+            }
+            else if (gameField[y][x] == 3){
+                this.add.image((x*iconsize)+offsetx, (y*iconsize)+offsety-65, 'select');
+
+            }
+        }
+      }
         this.fieldSelectorImage = this.add.image((markerPositionX*iconsize)+offsetx, iconsize-13 , 'select');
 
         particlesApples = this.add.particles('apple');
@@ -480,7 +490,7 @@ async function update (time, delta){
     this.add.text(10, 0, '||| Good! You have won this game! |||', { fontSize: '20px', fill: '#0f0' });
   }
   else if (whoHasWonTheGame == 2 ){
-    this.add.text(23, 0, '||| Sorry, you lost this game! |||', { fontSize: '20px', fill: '#f00' });
+    this.add.text(10, 0, '||| Sorry, you lost this game! |||', { fontSize: '20px', fill: '#f00' });
   }
   else  {
 
