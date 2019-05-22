@@ -452,6 +452,10 @@
     return newStone;
 }
 
+/**
+ * 
+ * @param {*} player 
+ */
 function checkWin (player){
 
     if (
@@ -593,6 +597,7 @@ async function update (time, delta){
                 }
                 // LET AI PLAy
                 if (player == computerid){
+                    
                     console.log(">>>>AI<<<<<");
                     p =letAIplay();
                     console.log("NEW POINT (AI) X:" + p.x + "Y: " + p.y);
@@ -674,5 +679,4 @@ async function update (time, delta){
 
     }
 
-    create();
 
