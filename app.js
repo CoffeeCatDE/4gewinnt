@@ -1,4 +1,11 @@
-// @TODO clever and simple enemy AI
+// @TODO clever and simple enemy AI::::
+//  HORIZONTAL L->R  [x]
+//  HORIZONTAL R->L  [ ]
+//  VERTICAL   U->D  [ ]
+//  DIAGONAL   L->R  [ ]
+//  DIAGONAL   R->L  [ ]
+
+
 // @TODO CodeDoc for functions and Game
 // @TODO Steuerung für Mobile Endgeräte (byCLICK)
 // @TODO README.md ERSTELLEN
@@ -115,7 +122,7 @@ function create() {
 
     //this.impact.world.setBounds();
 
-    gameFielda = [
+    gameField = [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -126,16 +133,16 @@ function create() {
 
     
     // ALL OTHER GAMEFIELDS ARE JUST FOR TESTING DIFFERENT GAME STATES!
-    gameFieldTest1 = [
+    gameField2221 = [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 1, 0, 0],
-        [0, 0, 0, 2, 1, 1, 0],
-        [0, 0, 0, 2, 1, 1, 1]
+        [2, 2, 2, 0, 0, 0, 0],
+        [0, 0, 0, 2, 0, 0, 0], 
+        [0, 0, 0, 2, 0, 0, 0],
+        [0, 0, 0, 2, 0, 0, 0]
     ];
 
-    gameField = [
+    gameField222 = [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -293,10 +300,17 @@ function hasNearlyOneWonHorizontal() {
         for (var x = 0; x < gamefieldWidth; x++) {
             if ((gameField[y][x] == computerid) &&
                 (gameField[y][x + 1] == computerid) &&
-                (gameField[y][x + 2] == computerid) ) {
+                (gameField[y][x + 2] == computerid) 
+                
+                &&
+
+                (y == getHeigthOfColumn(x+3))
+                )
+                {
                     console.log("You NEARLY lost. (horizontal) : Y->" + y + "X->" + (x+3));
                     gameOver = true;
-                    return new Phaser.Geom.Point(x+3,y);;
+                    var thisStoneWins = new Phaser.Geom.Point(x+3,y);
+                    return thisStoneWins;
             }
         }
     }
@@ -561,17 +575,18 @@ async function update(time, delta) {
             if (player == computerid) {
 
                 var newStoneInForAIwin = hasNearlyOneWonHorizontal();
-                console.log ("NEUUUUU: " + newStoneInForAIwin.y + newStoneInForAIwin.x);
-                var blub = null;
-                if (true){
-                    p  = newStoneInForAIwin;
-                    console.log("NEW STONE WITH AI WIN");
-                    whoHasWonTheGame = computerid;
-                }
-                if (false) {
+                //console.log ("NEUUUUU: " + newStoneInForAIwin.y + newStoneInForAIwin.x);
+
+                if (!newStoneInForAIwin){
                     console.log(">>>>AI<<<<<");
                     p = letAIplay();
                     console.log("NEW POINT (AI) X:" + p.x + "Y: " + p.y);
+
+                }
+                else {                  
+                    p  = newStoneInForAIwin;
+                    console.log("NEW STONE WITH AI WIN");
+                    whoHasWonTheGame = computerid;
                 }
 
                 gameField[p.y][p.x] = computerid;
