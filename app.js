@@ -115,7 +115,7 @@ function create() {
 
     //this.impact.world.setBounds();
 
-    gameField = [
+    gameFielda = [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -135,13 +135,13 @@ function create() {
         [0, 0, 0, 2, 1, 1, 1]
     ];
 
-    gameFieldTest2 = [
+    gameField = [
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 1, 0, 0],
-        [0, 0, 0, 2, 1, 1, 0],
-        [0, 0, 0, 2, 1, 1, 1]
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 2, 2, 2, 0]
     ];
 
     gameFieldTest3 = [
@@ -283,7 +283,26 @@ function hasOneWonHorizontal(whoIsPlayer) {
 }
 
 
+// PREDICT AI
+function hasNearlyOneWonHorizontal() {
 
+    /**
+    TEST HORIZONTAL WIN SUCCESS
+    **/
+    for (var y = 0; y < gamefieldHeight; y++) {
+        for (var x = 0; x < gamefieldWidth; x++) {
+            if ((gameField[y][x] == computerid) &&
+                (gameField[y][x + 1] == computerid) &&
+                (gameField[y][x + 2] == computerid) ) {
+                    console.log("You NEARLY lost. (horizontal) : Y->" + y + "X->" + (x+3));
+                    gameOver = true;
+                    return new Phaser.Geom.Point(x+3,y);;
+            }
+        }
+    }
+
+
+}
 
 
 // IS ROW FREE OR FULL
@@ -369,7 +388,7 @@ function hasWonDiagonal(whoIsPlayer) {
                 )
             ) {
                 console.log("DIAGONAL WON R->L" + whoIsPlayer);
-                whoHasWonTheGame = whoIsPlayer;
+                whoHasWonTheGame = computerid;
                 gameOver = true;
 
                 return whoIsPlayer;
@@ -540,10 +559,20 @@ async function update(time, delta) {
             }
             // THIS ROUND IS FOR COMPUTER
             if (player == computerid) {
-                
-                console.log(">>>>AI<<<<<");
-                p = letAIplay();
-                console.log("NEW POINT (AI) X:" + p.x + "Y: " + p.y);
+
+                var newStoneInForAIwin = hasNearlyOneWonHorizontal();
+                console.log ("NEUUUUU: " + newStoneInForAIwin.y + newStoneInForAIwin.x);
+                var blub = null;
+                if (true){
+                    p  = newStoneInForAIwin;
+                    console.log("NEW STONE WITH AI WIN");
+                    whoHasWonTheGame = computerid;
+                }
+                if (false) {
+                    console.log(">>>>AI<<<<<");
+                    p = letAIplay();
+                    console.log("NEW POINT (AI) X:" + p.x + "Y: " + p.y);
+                }
 
                 gameField[p.y][p.x] = computerid;
 
