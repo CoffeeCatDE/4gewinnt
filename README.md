@@ -1,9 +1,8 @@
 # check-ht 
+
 ## About
 CHECK-HT is a simple game coded in JavaScript.
 It´s formally known as "Connect Four".
-
-![alt text](https://github.com/blnschade/check-ht/blob/master/screen.png "Game View")
 
 
 ## What is "Connect Four"?
@@ -14,6 +13,11 @@ The two players then alternate turns dropping one of their discs at a time into 
 until the second player, with red discs, achieves a diagonal four in a row, and wins the game. 
 For games where the board fills up before either player achieves four in a row, then the games are a draw.
 
+## Game View
+![Game View](https://github.com/blnschade/check-ht/blob/master/screen.png "Game View")
+
 ## Used Libs
 * Phaser 3
 * Jasmine
+
+
