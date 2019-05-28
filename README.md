@@ -1,9 +1,7 @@
 # check-ht 
 
 ## About
-CHECK-HT is a simple game coded in JavaScript.
-It´s formally known as "Connect Four".
-
+CHECK-HT is a simple game programmed in JavaScript. It´s known as "Connect Four".
 
 ## What is "Connect Four"?
 Object: Connect four of your checkers in a row while preventing your opponent from doing the same. 
