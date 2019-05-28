@@ -133,3 +133,70 @@ describe('test the hasOneWonVertical function', () => {
         expect(result2).toBe(2);
       });
   });
+
+
+  
+/**
+ * TEST hasOneWonDiagonal FUNCTION
+ */
+describe('test the hasOneWonDiagonal function', () => {
+  it('winning gameField (left Border)', () => {
+    // let bool = false;
+    gameField = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 2, 0, 0, 0],
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 2, 0, 0, 0, 0, 0],
+        [2, 0, 0, 0, 0, 0, 0]
+    ];
+
+      // act
+      let result1 = hasWonDiagonal(2);
+      expect(result1).toBe(2);
+
+     
+  });
+
+  it('winnig GameField (right Border)', () => {
+    gameField = [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 2],
+      [0, 0, 0, 0, 0, 2, 0],
+      [0, 0, 0, 0, 2, 0, 0],
+      [0, 0, 0, 2, 0, 0, 0]
+    ];
+
+    let result2 = hasWonDiagonal(2);
+    expect(result2).toBe(2);
+  });
+
+  it('winnig GameField (left top Border)', () => {
+    gameField = [
+      [0, 0, 0, 2, 0, 0, 0],
+      [0, 0, 2, 0, 0, 0, 0],
+      [0, 2, 0, 0, 0, 0, 0],
+      [2, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0]
+    ];
+
+    let result2 = hasWonDiagonal(2);
+    expect(result2).toBe(2);
+  });
+
+   it('winnig GameField (right top Border)', () => {
+    gameField = [
+      [0, 0, 0, 0, 0, 0, 2],
+      [0, 0, 0, 0, 0, 2, 0],
+      [0, 0, 0, 0, 2, 0, 0],
+      [0, 0, 0, 2, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0]
+    ];
+
+    let result2 = hasWonDiagonal(2);
+    expect(result2).toBe(2);
+  });
+});
