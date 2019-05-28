@@ -3,7 +3,7 @@
 CHECK-HT is a simple game coded in JavaScript.
 It´s formally known as "Connect Four".
 
-![alt text](https://github.com/blnschade/screen.png "Game View")
+![alt text](https://github.com/blnschade/check-ht/blob/master/screen.png "Game View")
 
 
 ## What is "Connect Four"?
