@@ -130,77 +130,7 @@ function create() {
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0]
     ];
-
     
-    // ALL OTHER GAMEFIELDS ARE JUST FOR TESTING DIFFERENT GAME STATES!
-    gameField2221 = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 2, 2, 0, 0, 0, 0],
-        [0, 0, 0, 2, 0, 0, 0], 
-        [0, 0, 0, 2, 0, 0, 0],
-        [0, 0, 0, 2, 0, 0, 0]
-    ];
-
-    gameField222 = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 2, 2, 0]
-    ];
-
-    gameFieldTest3 = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0]
-    ];
-
-    gameFieldTest4 = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, computerid, computerid, computerid, 0, 0]
-    ];
-    gameFieldTest5 = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, playerid, playerid, playerid, 0, 0, 0]
-    ];
-    gameFieldTest6 = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 0, 0, 0, 0],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2]
-    ];
-    gameFieldTest7 = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2]
-    ];
-    gameFieldTest8 = [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 0, 2]
-    ];
-
     // END OF TESTING GAME FIELDS
 
 
@@ -229,6 +159,32 @@ function create() {
 
     particlesApples = this.add.particles('apple');
     particlesFishes = this.add.particles('fish');
+}
+function hasOneWonVertical (whoIsPlayer){
+
+    for (var x = 0; x < gamefieldWidth; x++){
+        for (var y = 5; y >= 3; y--){
+            if (
+               (gameField[y][x] == whoIsPlayer) &&
+               (gameField[y-1][x] == whoIsPlayer) &&
+               (gameField[y-2][x] == whoIsPlayer) &&
+               (gameField[y-3][x] == whoIsPlayer)
+               )
+            {
+
+                    whoHasWonTheGame = whoIsPlayer;
+                    gameOver = true;
+                    
+                    console.log("HUHU");
+                    return whoIsPlayer;
+            }
+
+
+
+
+
+        }
+    }
 }
 
 function particleEnd(player) {
