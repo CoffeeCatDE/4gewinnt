@@ -3,6 +3,16 @@
 ## About
 CHECK-HT is a simple game programmed in JavaScript. It´s known as "Connect Four".
 
+## Prerequisites
+This game works best and was tested in the following browsers:
+
+- Chrome
+- Microsoft Edge 
+- Firefox
+
+Not supported is:
+- Internet Explorer
+
 ## What is "Connect Four"?
 Object: Connect four of your checkers in a row while preventing your opponent from doing the same. 
 A gameplay example (right), shows the first player starting Connect Four 
@@ -15,7 +25,7 @@ For games where the board fills up before either player achieves four in a row, 
 ![Game View](https://github.com/blnschade/check-ht/blob/master/screen.png "Game View")
 
 ## Used Libs
-* Phaser 3
-* Jasmine
+* Phaser 3 (Game Framework)
+* Jasmine (Unit Testing Framework)
 
 
