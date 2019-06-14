@@ -1,4 +1,4 @@
-# check-ht 
+# 4gewinnt 
 
 ## About
 CHECK-HT is a simple game programmed in JavaScript. It´s known as "Connect Four".
