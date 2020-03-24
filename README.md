@@ -29,3 +29,13 @@ For games where the board fills up before either player achieves four in a row, 
 * Jasmine (Unit Testing Framework)
 
 
+## ToDO
+- AI
+- Animation fallender Steine
+- Replay
+- Multiplayer
+- CodeDoc for functions and Game
+- Steuerung für Mobile Endgeräte (byCLICK)
+- Unit-Testing
+- Code Refactoring
+- Eigene Grafiken zeichnen (HUNDE?)
