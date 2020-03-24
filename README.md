@@ -39,3 +39,4 @@ For games where the board fills up before either player achieves four in a row, 
 - Unit-Testing
 - Code Refactoring
 - Eigene Grafiken zeichnen (HUNDE?)
+- Sprache auswählen (ENG / GER)
